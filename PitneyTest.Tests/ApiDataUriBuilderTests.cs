@@ -16,7 +16,7 @@ namespace PitneyTest.Tests
             var expectedUrl = originalUrl + "transactions";
             var target = new ApiDataUriBuilder(new Uri(originalUrl));
             // act
-            var result = target.GetTransactions();
+            var result = target.GetTransactionsUri();
             //assert
             Assert.AreEqual(expectedUrl, result.ToString());
         }
@@ -25,13 +25,13 @@ namespace PitneyTest.Tests
         public void TestBuilderWithEndDateParameter()
         {
             // init
-            var expectedUrl = originalUrl + "transactions?endDate=2015-07-22+10:10:10Z";
+            var expectedUrl = originalUrl + "transactions?endDate=2015-07-22T10:10:10Z";
             var target = new ApiDataUriBuilder(new Uri(originalUrl), new ApiBuilderConfiguration
             {
                 EndDate = new DateTime(2015, 7, 22, 10, 10, 10, 123)
             });
             // act
-            var result = target.GetTransactions();
+            var result = target.GetTransactionsUri();
             //assert
             Assert.AreEqual(expectedUrl, result.ToString());
         }
@@ -45,7 +45,7 @@ namespace PitneyTest.Tests
                 StartDate = new DateTime(2015, 7, 22, 10, 10, 10, 123)
             });
             // act
-            var result = target.GetTransactions();
+            var result = target.GetTransactionsUri();
             //assert
             Assert.AreEqual(expectedUrl, result.ToString());
         }
@@ -54,14 +54,14 @@ namespace PitneyTest.Tests
         public void TestBuilderWithStartDateAndEndDateParameters()
         {
             // init
-            var expectedUrl = originalUrl + "transactions?endDate=2015-07-22+10:10:10Z&startDate=2015-07-22+10:10:10Z";
+            var expectedUrl = originalUrl + "transactions?endDate=2015-07-22T10:10:10Z&startDate=2015-07-22T10:10:10Z";
             var target = new ApiDataUriBuilder(new Uri(originalUrl), new ApiBuilderConfiguration
             {
                 StartDate = new DateTime(2015, 7, 22, 10, 10, 10, 123),
                 EndDate = new DateTime(2015, 7, 22, 10, 10, 10, 123),
             });
             // act
-            var result = target.GetTransactions();
+            var result = target.GetTransactionsUri();
             //assert
             Assert.AreEqual(expectedUrl, result.ToString());
         }
@@ -76,7 +76,7 @@ namespace PitneyTest.Tests
                 PageSize = 30
             });
             // act
-            var result = target.GetTransactions();
+            var result = target.GetTransactionsUri();
             //assert
             Assert.AreEqual(expectedUrl, result.ToString());
         }
@@ -91,7 +91,7 @@ namespace PitneyTest.Tests
                 PageNumber = 30
             });
             // act
-            var result = target.GetTransactions();
+            var result = target.GetTransactionsUri();
             //assert
             Assert.AreEqual(expectedUrl, result.ToString());
         }
@@ -108,7 +108,7 @@ namespace PitneyTest.Tests
 
             });
             // act
-            var result = target.GetTransactions();
+            var result = target.GetTransactionsUri();
             //assert
             Assert.AreEqual(expectedUrl, result.ToString());
         }

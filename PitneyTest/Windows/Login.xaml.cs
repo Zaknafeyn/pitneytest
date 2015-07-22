@@ -13,6 +13,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using PitneyTest.API;
+using PitneyTest.Token;
+using PitneyTest.Windows;
 
 namespace PitneyTest
 {
@@ -24,11 +26,14 @@ namespace PitneyTest
         public Login()
         {
             InitializeComponent();
+
+            UserId = "950f9e6a-2ce9-44f2-9f25-31e5caad60a0@pb";
         }
 
+        public string UserId { get; set; }
+    
         private async void LoginButton_Click(object sender, RoutedEventArgs e)
         {
-            var userId = this.TxtUserIdTxt.Text.Trim();
             var loginUrl = ConfigurationManager.AppSettings[Constants.LoginUrl];
             var loginServer = ConfigurationManager.AppSettings[Constants.LoginServer];
 
@@ -36,13 +41,25 @@ namespace PitneyTest
 
             var dataRetrieval = new DataRetrieval();
             Cursor = Cursors.Wait;
-            var token = await dataRetrieval.GetTokenAsync(url, userId);
-            Cursor = Cursors.Arrow;
-            TxbToken.Text = token.AuthToken;
+            AccessToken token = null;
+
+            try
+            {
+                token = await dataRetrieval.GetTokenAsync(url, UserId);
+            }
+            catch
+            {
+                MessageBox.Show("Invalid username. Try again.", "Login error", MessageBoxButton.OK);
+                return;
+            }
+            finally
+            {
+                Cursor = Cursors.Arrow;
+            }
 
             var mainWindow = new MainWindow(token, dataRetrieval);
             mainWindow.Show();
-            
+
             Close();
         }
 

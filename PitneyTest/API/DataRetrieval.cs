@@ -28,7 +28,8 @@ namespace PitneyTest.API
 
         private HttpWebRequest GetTransactionsWebRequest(Uri uri, AccessToken token)
         {
-            var request = (HttpWebRequest)WebRequest.Create(uri);
+            var uriString = uri.ToString();
+            var request = (HttpWebRequest)WebRequest.Create(uriString);
 
             request.Method = "GET";
             request.ContentType = "application/x-www-form-urlencoded";
@@ -74,6 +75,15 @@ namespace PitneyTest.API
             return GetTokenFromResponse(response);
         }
 
+        public async Task<Transactions> GetTransactionsAsync(Uri uri, AccessToken token)
+        {
+            var request = GetTransactionsWebRequest(uri, token);
+
+            var response = await request.GetResponseAsync();
+
+            return GetTransactionsFromResponse(response);
+        }
+
         public AccessToken GetToken(Uri uri, string userId)
         {
             var request = GetLoginWebRequest(uri, userId);
@@ -91,14 +101,6 @@ namespace PitneyTest.API
 
             return GetTransactionsFromResponse(response);
         }
-
-        public async Task<Transactions> GetTransactionsAsync(Uri uri, AccessToken token)
-        {
-            var request = GetTransactionsWebRequest(uri, token);
-
-            var response = await request.GetResponseAsync();
-
-            return GetTransactionsFromResponse(response);
-        }
+        
     }
 }

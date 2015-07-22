@@ -15,7 +15,7 @@ namespace PitneyTest.API
         {
             var dataApiUrlTemplate = ConfigurationManager.AppSettings[Constants.DataApiUrlTemplate];
             var dataServer = ConfigurationManager.AppSettings[Constants.DataServer];
-            DataApiUri = new Uri(string.Format(dataApiUrlTemplate, dataServer));
+            DataApiUri = new Uri(string.Format(dataApiUrlTemplate.TrimEnd('\\') + "\\", dataServer));
             Configuration = configuration;
         }
 
@@ -25,19 +25,7 @@ namespace PitneyTest.API
             Configuration = configuration;
         }
 
-        public ApiBuilderConfiguration Configuration { get; set; }
-
-        public Uri DataApiUri { get; private set; }
-
-        public Uri GetTransactions()
-        {
-            var uriBuilder = new UriBuilder(DataApiUri);
-
-            uriBuilder.Query = GetQueryParams(uriBuilder);
-            uriBuilder.Path += "transactions";
-
-            return uriBuilder.Uri;
-        }
+        #region Private members
 
         private string GetQueryParams(UriBuilder uriBuilder)
         {
@@ -58,10 +46,10 @@ namespace PitneyTest.API
                 return parameters;
 
             if (Configuration.EndDate.HasValue)
-                parameters.Add("endDate", string.Format("{0:u}", Configuration.EndDate));
+                parameters.Add("endDate", string.Format("{0:s}Z", Configuration.EndDate));
 
             if (Configuration.StartDate.HasValue)
-                parameters.Add("startDate", string.Format("{0:u}", Configuration.StartDate));
+                parameters.Add("startDate", string.Format("{0:s}Z", Configuration.StartDate));
 
             if (Configuration.PageNumber.HasValue)
                 parameters.Add("page", Configuration.PageNumber.Value.ToString());
@@ -82,16 +70,32 @@ namespace PitneyTest.API
                 return null;
 
             if (sortOrder.HasValue && sortField.HasValue)
-                return new KeyValuePair<string, string>("sort", string.Format("{0},{1}", 
-                    Enum.GetName(typeof(SortField), sortField.Value), 
+                return new KeyValuePair<string, string>("sort", string.Format("{0},{1}",
+                    Enum.GetName(typeof(SortField), sortField.Value),
                     Enum.GetName(typeof(SortOrder), sortOrder.Value)));
 
             if (sortOrder.HasValue)
                 return new KeyValuePair<string, string>("sort", string.Format("{0}",
-                    Enum.GetName(typeof (SortField), sortField.Value)));
+                    Enum.GetName(typeof(SortField), sortField.Value)));
 
             return new KeyValuePair<string, string>("sort", string.Format("{0}",
-                Enum.GetName(typeof (SortOrder), sortOrder.Value)));
+                Enum.GetName(typeof(SortOrder), sortOrder.Value)));
+        }
+
+        #endregion
+
+        public ApiBuilderConfiguration Configuration { get; set; }
+
+        public Uri DataApiUri { get; private set; }
+
+        public Uri GetTransactionsUri()
+        {
+            var uriBuilder = new UriBuilder(DataApiUri);
+
+            uriBuilder.Query = GetQueryParams(uriBuilder);
+            uriBuilder.Path += "transactions";
+
+            return uriBuilder.Uri;
         }
     }
 }
