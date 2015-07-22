@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PitneyTest", "PitneyTest\PitneyTest.csproj", "{041D8637-DF23-43B5-9B82-8C5C3E366602}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PitneyTest.Tests", "PitneyTest.Tests\PitneyTest.Tests.csproj", "{A6B6080E-EDF4-4162-9E37-C7E5D60A766D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{041D8637-DF23-43B5-9B82-8C5C3E366602}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{041D8637-DF23-43B5-9B82-8C5C3E366602}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{041D8637-DF23-43B5-9B82-8C5C3E366602}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{041D8637-DF23-43B5-9B82-8C5C3E366602}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A6B6080E-EDF4-4162-9E37-C7E5D60A766D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6B6080E-EDF4-4162-9E37-C7E5D60A766D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6B6080E-EDF4-4162-9E37-C7E5D60A766D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6B6080E-EDF4-4162-9E37-C7E5D60A766D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
