@@ -83,6 +83,7 @@ namespace PitneyTest.Windows
         private void BindData()
         {
             LsvTodayItems.ItemsSource = YesterdaysTransactions.Content;
+            EicYesterday.DataSource = YesterdaysTransactions.Content;
         }
     }
 }

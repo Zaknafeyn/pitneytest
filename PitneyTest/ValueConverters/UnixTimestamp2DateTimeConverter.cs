@@ -5,7 +5,7 @@ using System.Windows.Data;
 namespace PitneyTest.ValueConverters
 {
     [ValueConversion(typeof(string), typeof(DateTime))]    
-    public class DateConverter : IValueConverter
+    public class UnixTimestamp2DateTimeConverter : IValueConverter
     {
         // convet UNIX timestamp to DateTime
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
