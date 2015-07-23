@@ -41,6 +41,18 @@ namespace PitneyTest.Controls
             get { return LsvTodayItems.SelectedItem as Content; }
         }
 
+        public bool IsExpanded
+        {
+            get { return ExpanderMain.IsExpanded; }
+            set { ExpanderMain.IsExpanded = value; }
+        }
+
+        public void SelectFirstLoadedItem()
+        {
+            IsExpanded = true;
+            LsvTodayItems.SelectedIndex = 0;
+        }
+
         public event EventHandler<SelectedTransactionChangedEventArgs> SelectedTransactionChanged;
 
         protected virtual void OnSelectedTransactionChanged(Content currentContent)

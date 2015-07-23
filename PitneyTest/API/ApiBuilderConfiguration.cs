@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace PitneyTest.API
 {
@@ -10,5 +11,6 @@ namespace PitneyTest.API
         public uint? PageSize { get; set; }
         public SortField? SortField { get; set; }
         public SortOrder? SortOrder { get; set; }
+        public Dictionary<string, string> CustomSettings { get; set; }
     }
 }

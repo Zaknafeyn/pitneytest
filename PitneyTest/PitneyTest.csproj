@@ -70,19 +70,13 @@
     </Compile>
     <Compile Include="EventArguments\SelectedTransactionChangedEventArgs.cs" />
     <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="ValueConverters\CollectionToVisibilityConverter.cs" />
     <Compile Include="ValueConverters\UnixTimestamp2DateTimeConverter.cs" />
-    <Compile Include="Windows\LoadingWindow.xaml.cs">
-      <DependentUpon>LoadingWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Windows\Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>
     </Compile>
     <Compile Include="Token\AccessToken.cs" />
     <Page Include="Controls\ExpandableItemControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Windows\LoadingWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -138,7 +132,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\loader.gif" />
+    <EmbeddedResource Include="Resources\refresh.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

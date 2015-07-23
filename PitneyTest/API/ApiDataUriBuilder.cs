@@ -61,6 +61,12 @@ namespace PitneyTest.API
             if (sortParameter.HasValue)
                 parameters.Add(sortParameter.Value.Key, sortParameter.Value.Value);
 
+            if (Configuration.CustomSettings != null)
+                foreach (var customSetting in Configuration.CustomSettings)
+                {
+                    parameters.Add(customSetting.Key, customSetting.Value);
+                }
+
             return parameters;
         }
 

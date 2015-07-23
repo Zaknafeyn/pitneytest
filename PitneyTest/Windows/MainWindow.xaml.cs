@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net.Mime;
+using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using PitneyTest.API;
 using PitneyTest.Controls;
 using PitneyTest.DataObjects;
@@ -21,9 +24,18 @@ namespace PitneyTest.Windows
 
             InitializeComponent();
 
+            _expandableItemControls = new List<ExpandableItemControl>
+            {
+                EicToday,
+                EicYesterday,
+                EicLastWeek,
+                EicOlder
+            };
+
             LoadDataAsync();
 
             Show();
+
         }
 
         public AccessToken Token { get; private set; }
@@ -33,11 +45,11 @@ namespace PitneyTest.Windows
         public Transactions LastWeekTransactions { get; private set; }
         public Transactions OlderTransactions { get; private set; }
 
+        private List<ExpandableItemControl> _expandableItemControls;
+
         private async void LoadDataAsync()
         {
-
-            var loadingWindow = new LoadingWindow();
-            loadingWindow.Show();
+            DataLodingStart();
 
             var utcNow = DateTime.UtcNow;
             var todayStartDate = new DateTime(utcNow.Year, utcNow.Month, utcNow.Day, 0, 0, 0, 0);
@@ -46,6 +58,10 @@ namespace PitneyTest.Windows
             var apiUriBuilder = new ApiDataUriBuilder(new ApiBuilderConfiguration
             {
                 StartDate = todayStartDate,
+                CustomSettings = new Dictionary<string, string>
+                {
+                    {"sort", "shipmentDate,asc"}
+                },
                 EndDate = todayEndDate,
                 PageSize = 100
             });
@@ -56,6 +72,10 @@ namespace PitneyTest.Windows
             {
                 StartDate = todayStartDate.AddDays(-1),
                 EndDate = todayEndDate.AddDays(-1),
+                CustomSettings = new Dictionary<string, string>
+                {
+                    {"sort", "shipmentDate,asc"}
+                },
                 PageSize = 100
             });
 
@@ -65,6 +85,10 @@ namespace PitneyTest.Windows
             {
                 StartDate = todayStartDate.AddDays(-8),
                 EndDate = todayEndDate.AddDays(-2),
+                CustomSettings = new Dictionary<string, string>
+                {
+                    {"sort", "shipmentDate,asc"}
+                },
                 PageSize = 100
             });
 
@@ -73,11 +97,14 @@ namespace PitneyTest.Windows
             apiUriBuilder = new ApiDataUriBuilder(new ApiBuilderConfiguration
             {
                 EndDate = todayEndDate.AddDays(-2),
+                CustomSettings = new Dictionary<string, string>
+                {
+                    {"sort", "shipmentDate,asc"}
+                },
                 PageSize = 100
             });
 
             var olderTransactionUri = apiUriBuilder.GetTransactionsUri();
-
 
             TodaysTransactions = await DataRetrieval.GetTransactionsAsync(todaysTransactionUri, Token);
             YesterdaysTransactions = await DataRetrieval.GetTransactionsAsync(yesterdaysTransactionUri, Token);
@@ -86,7 +113,38 @@ namespace PitneyTest.Windows
 
             BindData();
 
-            loadingWindow.Hide();
+            DataLodingEnd();
+        }
+
+        private void DataLodingStart()
+        {
+            MainGrid.Visibility = Visibility.Hidden;
+
+            MainDockPanel.Children.Remove(MainGrid);
+            var label = new Label
+            {
+                Content = "Loading ...",
+                HorizontalAlignment = HorizontalAlignment.Center,
+                VerticalAlignment = VerticalAlignment.Center,
+                FontSize = 30,
+                FontWeight = FontWeight.FromOpenTypeWeight(30)
+            };
+
+            MainDockPanel.Children.Add(label);
+        }
+
+        private void DataLodingEnd()
+        {
+            foreach (var expandableItemControl in _expandableItemControls)
+            {
+                expandableItemControl.IsExpanded = false;
+            }
+
+            _expandableItemControls[0].SelectFirstLoadedItem();
+
+            MainDockPanel.Children.Clear();
+            MainDockPanel.Children.Add(MainGrid);
+            MainGrid.Visibility = Visibility.Visible;
         }
 
         private void BindData()
@@ -97,12 +155,21 @@ namespace PitneyTest.Windows
             EicOlder.DataSource = OlderTransactions.Content;
         }
 
+        public Content CurrentContent { get; set; }
+
+        #region Event handlers
+
         private void ExpandableItemControl_OnSelectedTransactionChanged(object sender, SelectedTransactionChangedEventArgs e)
         {
             CurrentContent = e.CurrentContent;
             DataContext = CurrentContent;
         }
 
-        public Content CurrentContent { get; set; }
+        private void ButtonRefresh_OnClick(object sender, RoutedEventArgs e)
+        {
+            LoadDataAsync();
+        }
+
+        #endregion
     }
 }
