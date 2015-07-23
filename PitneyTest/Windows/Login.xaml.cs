@@ -4,9 +4,8 @@ using System.Windows;
 using System.Windows.Input;
 using PitneyTest.API;
 using PitneyTest.Token;
-using PitneyTest.Windows;
 
-namespace PitneyTest
+namespace PitneyTest.Windows
 {
     /// <summary>
     /// Interaction logic for Login.xaml
@@ -48,7 +47,10 @@ namespace PitneyTest
             }
 
             var mainWindow = new MainWindow(token, dataRetrieval);
-            mainWindow.Show();
+
+            
+
+//            mainWindow.Show();
 
             Close();
         }

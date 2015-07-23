@@ -23,7 +23,7 @@ namespace PitneyTest.Windows
 
             LoadDataAsync();
 
-//            BindData();
+            Show();
         }
 
         public AccessToken Token { get; private set; }
@@ -35,6 +35,10 @@ namespace PitneyTest.Windows
 
         private async void LoadDataAsync()
         {
+
+            var loadingWindow = new LoadingWindow();
+            loadingWindow.Show();
+
             var utcNow = DateTime.UtcNow;
             var todayStartDate = new DateTime(utcNow.Year, utcNow.Month, utcNow.Day, 0, 0, 0, 0);
             var todayEndDate = new DateTime(utcNow.Year, utcNow.Month, utcNow.Day, 23, 59, 59, 999);
@@ -81,18 +85,22 @@ namespace PitneyTest.Windows
             OlderTransactions = await DataRetrieval.GetTransactionsAsync(olderTransactionUri, Token);
 
             BindData();
+
+            loadingWindow.Hide();
         }
 
         private void BindData()
         {
-//            StackPanelTransactions.Children.Add()
             EicToday.DataSource = TodaysTransactions.Content;
             EicYesterday.DataSource = YesterdaysTransactions.Content;
+            EicLastWeek.DataSource = LastWeekTransactions.Content;
+            EicOlder.DataSource = OlderTransactions.Content;
         }
 
         private void ExpandableItemControl_OnSelectedTransactionChanged(object sender, SelectedTransactionChangedEventArgs e)
         {
             CurrentContent = e.CurrentContent;
+            DataContext = CurrentContent;
         }
 
         public Content CurrentContent { get; set; }

@@ -1,0 +1,8 @@
+﻿<Window x:Class="PitneyTest.Windows.LoadingWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Loading ..." Height="300" Width="300">
+    <Grid>
+        <MediaElement x:Name="LoadingGif" MediaEnded="MediaElement_OnMediaEnded" HorizontalAlignment="Stretch" Height="Auto" VerticalAlignment="Stretch" Width="Auto" Stretch="Uniform"  UnloadedBehavior="Manual" Source="../Resources/loader.gif" LoadedBehavior="Play"/>
+    </Grid>
+</Window>
