@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Net.Mime;
 using System.Windows;
 using PitneyTest.API;
+using PitneyTest.Controls;
 using PitneyTest.DataObjects;
+using PitneyTest.EventArguments;
 using PitneyTest.Token;
 
 namespace PitneyTest.Windows
@@ -82,8 +85,16 @@ namespace PitneyTest.Windows
 
         private void BindData()
         {
-            LsvTodayItems.ItemsSource = YesterdaysTransactions.Content;
+//            StackPanelTransactions.Children.Add()
+            EicToday.DataSource = TodaysTransactions.Content;
             EicYesterday.DataSource = YesterdaysTransactions.Content;
         }
+
+        private void ExpandableItemControl_OnSelectedTransactionChanged(object sender, SelectedTransactionChangedEventArgs e)
+        {
+            CurrentContent = e.CurrentContent;
+        }
+
+        public Content CurrentContent { get; set; }
     }
 }

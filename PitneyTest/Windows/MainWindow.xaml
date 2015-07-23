@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:valueConverters="clr-namespace:PitneyTest.ValueConverters"
     xmlns:controls="clr-namespace:PitneyTest.Controls"
+    xmlns:local="clr-namespace:PitneyTest.Windows"
     mc:Ignorable="d" x:Class="PitneyTest.Windows.MainWindow"
         Title="Transaction viewer - MainWindow" Height="422.8" Width="670.6" HorizontalContentAlignment="Stretch" ResizeMode="NoResize" Topmost="True" WindowStartupLocation="CenterScreen">
     <Window.Resources>
@@ -17,29 +18,14 @@
         </Grid.ColumnDefinitions>
         <DockPanel Grid.Column="0" LastChildFill="False" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Stretch">
             <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalContentAlignment="Stretch" DockPanel.Dock="Left" HorizontalAlignment="Stretch" Width="Auto">
-                <StackPanel Height="Auto" VerticalAlignment="Stretch" Width="Auto">
-                    <Expander Header="Today" IsExpanded="True" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" >
-                        <ListView Name="LsvTodayItems" MaxWidth="1024" ScrollViewer.HorizontalScrollBarVisibility="Disabled"  HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" VerticalAlignment="Top" Width="Auto"  Height="Auto" Margin="0,0,0,0" BorderThickness="0">
-                            <ListView.View>
-                                <GridView>
-                                    <GridViewColumn Header="User" DisplayMemberBinding="{Binding Path=UserDisplayName}" />
-                                    <GridViewColumn Header="Shipment date" DisplayMemberBinding="{Binding Path=ShipmentDate, StringFormat=dd-MM-yy HH:mm:ss, Converter={StaticResource DateConverter}}" />
-                                    <GridViewColumn Header="Debit/Credit" DisplayMemberBinding="{Binding Path=DebitOrCredit}" />
-                                    <GridViewColumn Header="Amount" DisplayMemberBinding="{Binding Path=MailServiceCost}" />
-                                    <GridViewColumn Header="Currency" DisplayMemberBinding="{Binding Path=Currency}" />
-                                </GridView>
-                            </ListView.View>
-                        </ListView>
+                <StackPanel Name="StackPanelTransactions" Height="Auto" VerticalAlignment="Stretch" Width="Auto" HorizontalAlignment="Stretch">
+                    <controls:ExpandableItemControl x:Name="EicToday" Header="Today" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" SelectedTransactionChanged="ExpandableItemControl_OnSelectedTransactionChanged">
 
-                    </Expander>
-                    <Expander Header="Yesterday" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" >
-                        <Grid Background="#FFE5E5E5" VerticalAlignment="Top" HorizontalAlignment="Stretch" Width="Auto" Height="Auto" RenderTransformOrigin="0.493,0.245" Margin="0,0,82,0" d:IsHidden="True">
-                            <Label Content="Some label" HorizontalAlignment="Left" Margin="24,38,0,0" VerticalAlignment="Top"/>
-                        </Grid>
-                    </Expander>
-                    <controls:ExpandableItemControl x:Name="EicYesterday" Header="Test header">
-                        
                     </controls:ExpandableItemControl>
+                    <controls:ExpandableItemControl x:Name="EicYesterday" Header="Yesterday" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto"  SelectedTransactionChanged="ExpandableItemControl_OnSelectedTransactionChanged">
+
+                    </controls:ExpandableItemControl>
+
                 </StackPanel>
             </ScrollViewer>
 
@@ -47,17 +33,8 @@
         <GridSplitter Grid.Column="1" DockPanel.Dock="Left" Height="Auto" VerticalAlignment="Stretch" HorizontalAlignment="Center" Width="5">
         </GridSplitter>
         <StackPanel Grid.Column="2" DockPanel.Dock ="Left" Width="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-            <ListView Name="LsvTodayDetailedItems" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" VerticalAlignment="Top" Height="Auto" Margin="0,0,0,0" BorderThickness="0">
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn Header="User" DisplayMemberBinding="{Binding Path=UserDisplayName}" />
-                        <GridViewColumn Header="Shipment date" DisplayMemberBinding="{Binding Path=ShipmentDate, StringFormat=dd-MM-yy HH:mm:ss, Converter={StaticResource DateConverter}}" />
-                        <GridViewColumn Header="Debit/Credit" DisplayMemberBinding="{Binding Path=DebitOrCredit}" />
-                        <GridViewColumn Header="Amount" DisplayMemberBinding="{Binding Path=MailServiceCost}" />
-                        <GridViewColumn Header="Currency" DisplayMemberBinding="{Binding Path=Currency}" />
-                    </GridView>
-                </ListView.View>
-            </ListView>
+            <TextBox Name="TextBoxTest" Height="23" TextWrapping="Wrap" Text="{Binding CurrentContent, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainWindow}}}"/>
+
         </StackPanel>
     </Grid>
 </Window>

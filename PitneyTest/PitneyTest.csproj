@@ -67,6 +67,8 @@
     <Compile Include="Controls\ExpandableItemControl.xaml.cs">
       <DependentUpon>ExpandableItemControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="EventArguments\SelectedTransactionChangedEventArgs.cs" />
+    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="ValueConverters\UnixTimestamp2DateTimeConverter.cs" />
     <Compile Include="Windows\Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>

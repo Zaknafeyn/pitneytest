@@ -45,7 +45,7 @@ namespace PitneyTest.DataObjects
         public string UserEmail { get; set; }
 
         [JsonProperty("currency")]
-        public string Currcency { get; set; }
+        public string Currency { get; set; }
 
         [JsonProperty("correlationId")]
         public string CorrelationId { get; set; }
