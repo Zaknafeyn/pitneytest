@@ -20,7 +20,7 @@ namespace PitneyTest.Windows
 
             LoadDataAsync();
 
-
+//            BindData();
         }
 
         public AccessToken Token { get; private set; }
@@ -76,6 +76,13 @@ namespace PitneyTest.Windows
             YesterdaysTransactions = await DataRetrieval.GetTransactionsAsync(yesterdaysTransactionUri, Token);
             LastWeekTransactions = await DataRetrieval.GetTransactionsAsync(lastWeekTransactionUri, Token);
             OlderTransactions = await DataRetrieval.GetTransactionsAsync(olderTransactionUri, Token);
+
+            BindData();
+        }
+
+        private void BindData()
+        {
+            LsvTodayItems.ItemsSource = YesterdaysTransactions.Content;
         }
     }
 }

@@ -64,6 +64,7 @@
     <Compile Include="API\SortField.cs" />
     <Compile Include="API\SortOrder.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="ValueConverters\DateConverter.cs" />
     <Compile Include="Windows\Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>
     </Compile>
