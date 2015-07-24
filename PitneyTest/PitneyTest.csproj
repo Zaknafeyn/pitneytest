@@ -74,6 +74,7 @@
       <DependentUpon>ExpandableItemControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="EventArguments\SelectedTransactionChangedEventArgs.cs" />
+    <Compile Include="EventArguments\SortItemsEventArgs.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Styles\CustomWindowStyle.cs" />
     <Compile Include="ValueConverters\CollectionToVisibilityConverter.cs" />
@@ -162,6 +163,9 @@
     <None Include="Resources\app-icon.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\logo.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
+using PitneyTest.API;
 using PitneyTest.DataObjects;
 using PitneyTest.EventArguments;
 
@@ -14,6 +15,9 @@ namespace PitneyTest.Controls
     /// </summary>
     public partial class ExpandableItemControl : UserControl
     {
+        public event EventHandler<SortItemsEventArgs> SortItems;
+        public event EventHandler<SelectedTransactionChangedEventArgs> SelectedTransactionChanged;
+
         public ExpandableItemControl()
         {
             InitializeComponent();
@@ -53,7 +57,11 @@ namespace PitneyTest.Controls
             LsvTodayItems.SelectedIndex = 0;
         }
 
-        public event EventHandler<SelectedTransactionChangedEventArgs> SelectedTransactionChanged;
+        protected virtual void OnSortItems(string sortField, SortOrder sortOrder)
+        {
+            if (SortItems != null)
+                SortItems(this, new SortItemsEventArgs(sortField, sortOrder));
+        }
 
         protected virtual void OnSelectedTransactionChanged(Content currentContent)
         {

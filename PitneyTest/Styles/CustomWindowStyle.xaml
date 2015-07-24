@@ -74,8 +74,9 @@
                             Height="Auto"
                             Background="#EFEFF2"
                             BorderBrush="{StaticResource CustomWindowBorderBrush}"
-                            BorderThickness="1"
-                            Padding="0">
+                            BorderThickness="2"
+                                CornerRadius="5"
+                            Padding="5">
                                 <DockPanel
                                 HorizontalAlignment="Stretch"
                                 Background="Transparent"

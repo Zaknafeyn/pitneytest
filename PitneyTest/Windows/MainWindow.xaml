@@ -28,7 +28,7 @@
             <ToolBar Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Left" VerticalAlignment="Top">
                 <Button x:Name="ButtonRefresh" Click="ButtonRefresh_OnClick">
                     <DockPanel  HorizontalAlignment="Left">
-                        <Image Source="../Resources/refresh.png" MaxWidth="16"></Image>
+                        <Image Source="/PitneyTest;component/Resources/refresh.png" MaxWidth="16"></Image>
                         <TextBlock>Refresh</TextBlock>
                     </DockPanel>
                 </Button>
@@ -62,7 +62,6 @@
                             </TextBlock>
                         </Label.Content>
                     </Label>
-
                     <GroupBox Header="Transaction details" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Height="170" Width="Auto">
 
                         <Grid HorizontalAlignment="Stretch" Height="Auto" VerticalAlignment="Stretch" Width="Auto">
@@ -100,7 +99,15 @@
                             <TextBox Grid.Row="2" Grid.Column="3" Text="{Binding WeightKilos}" Style="{StaticResource GridTextBoxesStyle}" />
 
                             <Label Grid.Row="3" Grid.Column="2" Content="Amount:" Style="{StaticResource GridLabelsStyle}" ></Label>
-                            <TextBox Grid.Row="3" Grid.Column="3" Text="{Binding Amount}" Style="{StaticResource GridTextBoxesStyle}" />
+                            <TextBox Grid.Row="3" Grid.Column="3"  Style="{StaticResource GridTextBoxesStyle}">
+                                <TextBox.Text >
+                                    <MultiBinding StringFormat="{}{0} ({1})">
+                                        <Binding Path="Amount" />
+                                        <Binding Path="Currency" />
+
+                                    </MultiBinding>
+                                </TextBox.Text>
+                            </TextBox>
                         </Grid>
 
                     </GroupBox>

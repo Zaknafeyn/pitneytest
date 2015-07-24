@@ -11,7 +11,7 @@
     </UserControl.Resources>
     <Grid>
         <Expander Header="Expander" Name="ExpanderMain" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch">
-            <ListView Name="LsvTodayItems" SelectionMode="Single" MaxWidth="1024" ScrollViewer.HorizontalScrollBarVisibility="Disabled"  HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" VerticalAlignment="Top" Width="Auto"  Height="Auto" Margin="0,0,0,0" BorderThickness="0" SelectionChanged="LsvTodayItems_SelectionChanged">
+            <ListView IsSynchronizedWithCurrentItem="True" Name="LsvTodayItems" SelectionMode="Single" MaxWidth="1024" ScrollViewer.HorizontalScrollBarVisibility="Disabled"  HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" VerticalAlignment="Top" Width="Auto"  Height="Auto" Margin="0,0,0,0" BorderThickness="0" SelectionChanged="LsvTodayItems_SelectionChanged">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="User" DisplayMemberBinding="{Binding Path=UserDisplayName}" />
