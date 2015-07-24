@@ -4,7 +4,7 @@
         xmlns:local="clr-namespace:PitneyTest.Windows"
         xmlns:windows="clr-namespace:PitneyTest.Windows"
         x:Name="LoginWindow" x:Class="PitneyTest.Windows.Login"
-        Title="Login" Height="112.6" Width="360" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" >
+        Title="Login" Height="112.6" Width="360" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Icon="/PitneyTest;component/app-icon.ico" >
     <Window.Style>
         <Binding Mode="OneWay" Source="{StaticResource CustomWindowStyle}"/>
     </Window.Style>

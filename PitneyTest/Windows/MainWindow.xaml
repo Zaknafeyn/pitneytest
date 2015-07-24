@@ -6,7 +6,7 @@
     xmlns:controls="clr-namespace:PitneyTest.Controls"
     xmlns:local="clr-namespace:PitneyTest.Windows"
     x:Name="Main" x:Class="PitneyTest.Windows.MainWindow"
-        Title="Transaction viewer - MainWindow" Height="523.8" Width="896.45" HorizontalContentAlignment="Stretch" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+        Title="Transaction viewer - MainWindow" Height="523.8" Width="896.45" HorizontalContentAlignment="Stretch" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Icon="/PitneyTest;component/app-icon.ico">
     <Window.Resources>
         <valueConverters:UnixTimestamp2DateTimeConverter x:Key="DateConverter" />
         <valueConverters:CollectionToVisibilityConverter x:Key="CollectionToVisibilityConverter" />

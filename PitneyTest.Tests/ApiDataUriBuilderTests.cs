@@ -97,6 +97,7 @@ namespace PitneyTest.Tests
         }
 
         [Test]
+        [Ignore]
         public void TestBuilderWithSortParameter()
         {
             // init
