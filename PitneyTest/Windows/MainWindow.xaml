@@ -10,23 +10,12 @@
     <Window.Resources>
         <valueConverters:UnixTimestamp2DateTimeConverter x:Key="DateConverter" />
         <valueConverters:CollectionToVisibilityConverter x:Key="CollectionToVisibilityConverter" />
-        <Style x:Key="GridTextBoxesStyle" TargetType="TextBox">
-            <Setter Property="Height" Value="26" />
-            <Setter Property="Margin" Value="5,5,0,0" />
-            <Setter Property="TextWrapping" Value="Wrap" />
-            <Setter Property="HorizontalAlignment" Value="Left" />
-            <Setter Property="VerticalAlignment" Value="Top" />
-            <Setter Property="Width" Value="83" />
-        </Style>
-        <Style x:Key="GridLabelsStyle" TargetType="Label">
-            <Setter Property="Margin" Value="5" />
-            <Setter Property="HorizontalAlignment" Value="Right" />
-            <Setter Property="Height" Value="26" />
-            <Setter Property="VerticalAlignment" Value="Top" />
-        </Style>
     </Window.Resources>
+    <Window.Style>
+        <Binding Mode="OneWay" Source="{StaticResource CustomWindowStyle}"/>
+    </Window.Style>
     <DockPanel x:Name="MainDockPanel" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-        <Grid x:Name="MainGrid" Height="Auto" VerticalAlignment="Stretch" Width="Auto" HorizontalAlignment="Stretch">
+        <Grid DockPanel.Dock="Top" x:Name="MainGrid" Height="Auto" VerticalAlignment="Stretch" Width="Auto" HorizontalAlignment="Stretch">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition MinWidth="100" Width="390"></ColumnDefinition>
                 <ColumnDefinition Width="auto"></ColumnDefinition>
@@ -35,7 +24,6 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="26"></RowDefinition>
                 <RowDefinition></RowDefinition>
-                <RowDefinition Height="20"></RowDefinition>
             </Grid.RowDefinitions>
             <ToolBar Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Left" VerticalAlignment="Top">
                 <Button x:Name="ButtonRefresh" Click="ButtonRefresh_OnClick">
@@ -145,5 +133,6 @@
                 </StackPanel>
             </ScrollViewer>
         </Grid>
+
     </DockPanel>
 </Window>
