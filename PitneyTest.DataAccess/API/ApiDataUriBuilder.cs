@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.Web;
+using PitneyTest.DataAccess.Helpers;
 
 namespace PitneyTest.DataAccess.API
 {
@@ -9,8 +8,8 @@ namespace PitneyTest.DataAccess.API
     {
         public ApiDataUriBuilder(ApiBuilderConfiguration configuration = null)
         {
-            var dataApiUrlTemplate = ConfigurationManager.AppSettings[Constants.DataApiUrlTemplate];
-            var dataServer = ConfigurationManager.AppSettings[Constants.DataServer];
+            var dataApiUrlTemplate = DataAccess.Configuration.DataApiUrlTemplate;
+            var dataServer = DataAccess.Configuration.DataServer;
             DataApiUri = new Uri(string.Format(dataApiUrlTemplate.TrimEnd('\\') + "\\", dataServer));
             Configuration = configuration;
         }
@@ -19,6 +18,19 @@ namespace PitneyTest.DataAccess.API
         {
             DataApiUri = dataApuUri;
             Configuration = configuration;
+        }
+
+        public ApiBuilderConfiguration Configuration { get; set; }
+        public Uri DataApiUri { get; }
+
+        public Uri GetTransactionsUri()
+        {
+            var uriBuilder = new UriBuilder(DataApiUri);
+
+            uriBuilder.Query = GetQueryParams(uriBuilder);
+            uriBuilder.Path += "transactions";
+
+            return uriBuilder.Uri;
         }
 
         #region Private members
@@ -73,31 +85,17 @@ namespace PitneyTest.DataAccess.API
 
             if (sortOrder.HasValue && sortField.HasValue)
                 return new KeyValuePair<string, string>("sort", string.Format("{0},{1}",
-                    Enum.GetName(typeof(SortField), sortField.Value),
-                    Enum.GetName(typeof(SortOrder), sortOrder.Value)));
+                    Enum.GetName(typeof (SortField), sortField.Value),
+                    Enum.GetName(typeof (SortOrder), sortOrder.Value)));
 
             if (sortOrder.HasValue)
                 return new KeyValuePair<string, string>("sort", string.Format("{0}",
-                    Enum.GetName(typeof(SortField), sortField.Value)));
+                    Enum.GetName(typeof (SortField), sortField.Value)));
 
             return new KeyValuePair<string, string>("sort", string.Format("{0}",
-                Enum.GetName(typeof(SortOrder), sortOrder.Value)));
+                Enum.GetName(typeof (SortOrder), sortOrder.Value)));
         }
 
         #endregion
-
-        public ApiBuilderConfiguration Configuration { get; set; }
-
-        public Uri DataApiUri { get; private set; }
-
-        public Uri GetTransactionsUri()
-        {
-            var uriBuilder = new UriBuilder(DataApiUri);
-
-            uriBuilder.Query = GetQueryParams(uriBuilder);
-            uriBuilder.Path += "transactions";
-
-            return uriBuilder.Uri;
-        }
     }
 }

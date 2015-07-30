@@ -78,7 +78,7 @@ namespace PitneyTest.DataAccess.DataObjects
         public string TransactionType { get; set; }
 
         [JsonProperty("insuranceValue")]
-        public int InsuranceValue { get; set; }
+        public int? InsuranceValue { get; set; }
 
         [JsonProperty("insuranceCost")]
         public double InsuranceCost { get; set; }

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Configuration;
 using System.Windows;
 using System.Windows.Input;
 using PitneyTest.DataAccess;
@@ -24,8 +23,8 @@ namespace PitneyTest.Windows
 
         private async void LoginButton_Click(object sender, RoutedEventArgs e)
         {
-            var loginUrl = ConfigurationManager.AppSettings[Constants.LoginUrl];
-            var loginServer = ConfigurationManager.AppSettings[Constants.LoginServer];
+            var loginUrl = Configuration.LoginUrl;
+            var loginServer = Configuration.LoginServer;
 
             var url = new Uri(string.Format(loginUrl, loginServer));
 
