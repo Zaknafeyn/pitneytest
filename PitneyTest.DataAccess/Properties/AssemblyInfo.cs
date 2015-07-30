@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 
-[assembly: AssemblyTitle("PitneyTest.Tests")]
+[assembly: AssemblyTitle("PitneyTest.DataAccess")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("PitneyTest.Tests")]
+[assembly: AssemblyProduct("PitneyTest.DataAccess")]
 [assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -22,7 +22,7 @@ using System.Runtime.InteropServices;
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 
-[assembly: Guid("d7f815e4-79a5-41a5-8293-ff2a707a30ac")]
+[assembly: Guid("576e1694-2d76-4d5e-a54c-9518aa957b65")]
 
 // Version information for an assembly consists of the following four values:
 //

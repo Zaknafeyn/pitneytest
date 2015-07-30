@@ -1,13 +1,27 @@
 ﻿using System;
 using NUnit.Framework;
-using PitneyTest.API;
+using PitneyTest.DataAccess.API;
 
 namespace PitneyTest.Tests
 {
     [TestFixture]
     public class ApiDataUriBuilderTests
     {
-        const string originalUrl = "http://foundation-qa.horizon.pitneycloud.com/api/v1/";
+        private const string originalUrl = "http://foundation-qa.horizon.pitneycloud.com/api/v1/";
+
+        public void TestBuilderWithStartDateParameter()
+        {
+            // init
+            var expectedUrl = originalUrl + "transactions?startDate=2015-07-22+10:10:10Z";
+            var target = new ApiDataUriBuilder(new Uri(originalUrl), new ApiBuilderConfiguration
+            {
+                StartDate = new DateTime(2015, 7, 22, 10, 10, 10, 123)
+            });
+            // act
+            var result = target.GetTransactionsUri();
+            //assert
+            Assert.AreEqual(expectedUrl, result.ToString());
+        }
 
         [Test]
         public void TestBuilder()
@@ -36,29 +50,14 @@ namespace PitneyTest.Tests
             Assert.AreEqual(expectedUrl, result.ToString());
         }
 
-        public void TestBuilderWithStartDateParameter()
-        {
-            // init
-            var expectedUrl = originalUrl + "transactions?startDate=2015-07-22+10:10:10Z";
-            var target = new ApiDataUriBuilder(new Uri(originalUrl), new ApiBuilderConfiguration
-            {
-                StartDate = new DateTime(2015, 7, 22, 10, 10, 10, 123)
-            });
-            // act
-            var result = target.GetTransactionsUri();
-            //assert
-            Assert.AreEqual(expectedUrl, result.ToString());
-        }
-
         [Test]
-        public void TestBuilderWithStartDateAndEndDateParameters()
+        public void TestBuilderWithPageParameters()
         {
             // init
-            var expectedUrl = originalUrl + "transactions?endDate=2015-07-22T10:10:10Z&startDate=2015-07-22T10:10:10Z";
+            var expectedUrl = originalUrl + "transactions?page=30";
             var target = new ApiDataUriBuilder(new Uri(originalUrl), new ApiBuilderConfiguration
             {
-                StartDate = new DateTime(2015, 7, 22, 10, 10, 10, 123),
-                EndDate = new DateTime(2015, 7, 22, 10, 10, 10, 123),
+                PageNumber = 30
             });
             // act
             var result = target.GetTransactionsUri();
@@ -82,21 +81,6 @@ namespace PitneyTest.Tests
         }
 
         [Test]
-        public void TestBuilderWithPageParameters()
-        {
-            // init
-            var expectedUrl = originalUrl + "transactions?page=30";
-            var target = new ApiDataUriBuilder(new Uri(originalUrl), new ApiBuilderConfiguration
-            {
-                PageNumber = 30
-            });
-            // act
-            var result = target.GetTransactionsUri();
-            //assert
-            Assert.AreEqual(expectedUrl, result.ToString());
-        }
-
-        [Test]
         [Ignore]
         public void TestBuilderWithSortParameter()
         {
@@ -106,7 +90,22 @@ namespace PitneyTest.Tests
             {
                 SortField = SortField.CreateDate,
                 SortOrder = SortOrder.Desc
+            });
+            // act
+            var result = target.GetTransactionsUri();
+            //assert
+            Assert.AreEqual(expectedUrl, result.ToString());
+        }
 
+        [Test]
+        public void TestBuilderWithStartDateAndEndDateParameters()
+        {
+            // init
+            var expectedUrl = originalUrl + "transactions?endDate=2015-07-22T10:10:10Z&startDate=2015-07-22T10:10:10Z";
+            var target = new ApiDataUriBuilder(new Uri(originalUrl), new ApiBuilderConfiguration
+            {
+                StartDate = new DateTime(2015, 7, 22, 10, 10, 10, 123),
+                EndDate = new DateTime(2015, 7, 22, 10, 10, 10, 123),
             });
             // act
             var result = target.GetTransactionsUri();

@@ -1,0 +1,28 @@
+﻿<UserControl x:Class="PitneyTest.Controls.ExpandableItemControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:valueConverters="clr-namespace:PitneyTest.ValueConverters"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <valueConverters:UnixTimestamp2DateTimeConverter x:Key="DateConverter" />
+    </UserControl.Resources>
+    <Grid>
+        <Expander Header="Expander" Name="ExpanderMain" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch">
+            <ListView IsSynchronizedWithCurrentItem="True" Name="LsvTodayItems" SelectionMode="Single" MaxWidth="1024" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" VerticalAlignment="Top" Width="Auto" Height="Auto" Margin="0,0,0,0" BorderThickness="0" SelectionChanged="LsvTodayItems_SelectionChanged">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="User" DisplayMemberBinding="{Binding Path=UserDisplayName}" />
+                        <GridViewColumn Header="Shipment date" DisplayMemberBinding="{Binding Path=ShipmentDate, StringFormat=dd-MM-yy HH:mm:ss, Converter={StaticResource DateConverter}}" />
+                        <GridViewColumn Header="Debit/Credit" DisplayMemberBinding="{Binding Path=DebitOrCredit}" />
+                        <GridViewColumn Header="Amount" DisplayMemberBinding="{Binding Path=MailServiceCost}" />
+                        <GridViewColumn Header="Currency" DisplayMemberBinding="{Binding Path=Currency}" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </Expander>
+
+    </Grid>
+</UserControl>
