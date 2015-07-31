@@ -1,0 +1,59 @@
+﻿<UserControl
+    x:Class="PitneyTest.Tablet.View.ContentDetails"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:view="using:PitneyTest.Tablet.View"
+    xmlns:converters="using:PitneyTest.Tablet.Converters">
+    <UserControl.Resources>
+        <converters:EnumerableToVisibilityConverter x:Key="EnumerableToVisibilityConverter"/>
+    </UserControl.Resources>
+    <Grid Visibility="{Binding Converter={StaticResource NotNullToVisibilityConverter}, FallbackValue=Collapsed}">
+        
+        <Grid.ChildrenTransitions>
+            <TransitionCollection>
+                <ContentThemeTransition HorizontalOffset="200"/>
+            </TransitionCollection>
+        </Grid.ChildrenTransitions>
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="0"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="0"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="0"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        
+        <TextBlock Text="{Binding UserFullName}" Style="{StaticResource HeaderTextBlockStyle}" Foreground="DimGray"/>
+
+        <view:TransactionDetails Grid.Row="2"/>
+        
+        <StackPanel Grid.Row="4">
+            <TextBlock Text="Description" Style="{StaticResource GroupHeaderTextBlockStyle}"/>
+            <TextBox Text="{Binding Description}" Height="100" IsReadOnly="True"/>
+        </StackPanel>
+        
+        <StackPanel Grid.Row="6" Style="{StaticResource GroupPanel}"
+                    Visibility="{Binding RecipientEmails, Converter={StaticResource EnumerableToVisibilityConverter}, FallbackValue=Collapsed}">
+            <TextBlock Text="Recepients" Style="{StaticResource GroupHeaderTextBlockStyle}"/>
+            <ListView ItemsSource="{Binding RecipientEmails}"/>
+        </StackPanel>
+        
+        <StackPanel Grid.Row="8" Style="{StaticResource GroupPanel}"
+                    Visibility="{Binding SenderEmails, Converter={StaticResource EnumerableToVisibilityConverter}, FallbackValue=Collapsed}">
+            <TextBlock Text="Senders" Style="{StaticResource GroupHeaderTextBlockStyle}"/>
+            <ListView ItemsSource="{Binding SenderEmails}"/>
+        </StackPanel>
+        
+        <StackPanel Grid.Row="10" Style="{StaticResource GroupPanel}"
+                    Visibility="{Binding ExtraServices, Converter={StaticResource EnumerableToVisibilityConverter}, FallbackValue=Collapsed}">
+            <TextBlock Text="ExtraServices" Style="{StaticResource GroupHeaderTextBlockStyle}"/>
+            <ListView ItemsSource="{Binding ExtraServices}"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

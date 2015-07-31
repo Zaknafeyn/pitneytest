@@ -2,11 +2,12 @@
 
 namespace PitneyTest.Tablet.View
 {
-    public sealed partial class MainView : IView
+    public sealed partial class LoginView : IView
     {
-        public MainView()
+        public LoginView()
         {
             InitializeComponent();
+            Loaded += (sender, args) => login.SelectAll();
         }
     }
 }
