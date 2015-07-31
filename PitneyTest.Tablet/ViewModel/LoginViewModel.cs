@@ -47,6 +47,7 @@ namespace PitneyTest.Tablet.ViewModel
         private async void LoginExecuted()
         {
             var url = new Uri(string.Format(Configuration.LoginUrl, Configuration.LoginServer));
+            var isTokenObtained = true;
 
             try
             {
@@ -54,6 +55,7 @@ namespace PitneyTest.Tablet.ViewModel
                 await Task.Delay(1);
 
                 _authContext.AccessToken = await _dataRetrieval.GetTokenAsync(url, UserId);
+
                 IsBusy = false;
 
                 NavigationService.Navigate(typeof (MainView));
@@ -61,10 +63,13 @@ namespace PitneyTest.Tablet.ViewModel
             catch
             {
                 IsBusy = false;
+                isTokenObtained = false;
                 _authContext.AccessToken = null;
+            }
 
-                var dialog = new MessageDialog("Invalid user identification. Try again.", "Login error");
-                await dialog.ShowAsync();
+            if (!isTokenObtained)
+            {
+                await new MessageDialog("Invalid user identification. Try again.", "Login error").ShowAsync();
             }
         }
     }
