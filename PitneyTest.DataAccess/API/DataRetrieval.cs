@@ -4,6 +4,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using PitneyTest.DataAccess.DataObjects;
+using PitneyTest.DataAccess.Helpers;
 using PitneyTest.DataAccess.Token;
 
 namespace PitneyTest.DataAccess.API
@@ -16,7 +17,7 @@ namespace PitneyTest.DataAccess.API
 
         private WebRequest GetLoginWebRequest(Uri uri, string userId)
         {
-            var request = WebRequest.Create(uri);
+            var request = WebRequestHelper.Create(uri);
 
             request.Method = "POST";
             request.ContentType = "application/x-www-form-urlencoded";
@@ -27,8 +28,7 @@ namespace PitneyTest.DataAccess.API
 
         private WebRequest GetTransactionsWebRequest(Uri uri, AccessToken token)
         {
-            var uriString = uri.ToString();
-            var request = WebRequest.Create(uriString);
+            var request = WebRequestHelper.Create(uri);
 
             request.Method = "GET";
             request.ContentType = "application/x-www-form-urlencoded";
