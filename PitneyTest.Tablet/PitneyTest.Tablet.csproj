@@ -122,11 +122,8 @@
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="View\TransactionDetails.xaml.cs">
-      <DependentUpon>TransactionDetails.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\ContentDetails.xaml.cs">
-      <DependentUpon>ContentDetails.xaml</DependentUpon>
+    <Compile Include="View\DetailsView.xaml.cs">
+      <DependentUpon>DetailsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
@@ -210,11 +207,12 @@
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
-    <Page Include="View\TransactionDetails.xaml">
-      <Generator>MSBuild:Compile</Generator>
+    <Page Include="Themes\RadDataGrid.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
-    <Page Include="View\ContentDetails.xaml">
+    <Page Include="View\DetailsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

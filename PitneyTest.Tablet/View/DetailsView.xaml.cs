@@ -1,8 +1,8 @@
 ﻿namespace PitneyTest.Tablet.View
 {
-    internal sealed partial class ContentDetails
+    internal sealed partial class DetailsView
     {
-        public ContentDetails()
+        public DetailsView()
         {
             InitializeComponent();
         }

@@ -1,0 +1,98 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:primitives="using:Telerik.UI.Xaml.Controls.Grid.Primitives"
+    xmlns:common="using:Telerik.UI.Xaml.Controls.Primitives.Common"
+    xmlns:grid="using:Telerik.UI.Xaml.Controls.Grid">
+
+    <SolidColorBrush x:Key="GridAlternationBackgroundBrush" Color="LightGray" Opacity="0.03" />
+    <SolidColorBrush x:Key="GridSelectedBorderBrush" Color="#FF3498DB" Opacity="0.6" />
+    <SolidColorBrush x:Key="GridLinesBrush" Color="#FFCCCCCC" />
+    <SolidColorBrush x:Key="GridAccentBrush" Color="#FF3498DB" />
+    <SolidColorBrush x:Key="GridGroupHeaderBackgroundBrush" Color="LightGray"/>
+
+    <Style TargetType="primitives:DataGridGroupHeader">
+        <Setter Property="Background" Value="{StaticResource GridGroupHeaderBackgroundBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource ApplicationForegroundThemeBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource ApplicationForegroundThemeBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="primitives:DataGridGroupHeader">
+                    <Grid Background="{TemplateBinding Background}" Margin="{TemplateBinding Padding}">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="ExpandStates">
+                                <VisualState x:Name="Expanded" />
+                                <VisualState x:Name="Collapsed">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="CollapseIcon" Storyboard.TargetProperty="Opacity">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="0" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ExpandIcon" Storyboard.TargetProperty="Opacity">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="1" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+
+                        <Rectangle Width="{TemplateBinding IndentWidth}" />
+                        <Border BorderThickness="0 0 0 0" BorderBrush="{StaticResource GridLinesBrush}"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid Margin="4,0,4,0" VerticalAlignment="Center">
+                                <TextBlock Foreground="{StaticResource GridAccentBrush}" FontFamily="Segoe UI Symbol" Text="&#xE0A0;" x:Name="CollapseIcon" Margin="6,0,0,6" />
+                                <TextBlock Foreground="{StaticResource GridAccentBrush}" FontFamily="Segoe UI Symbol" Text="&#xE0A1;" x:Name="ExpandIcon" Margin="6,0,0,6" Opacity="0" />
+                            </Grid>
+                            <ContentPresenter Grid.Column="1" Margin="6,0,0,3"
+                                              Content="{TemplateBinding DataContext}"
+                                              ContentTemplate="{TemplateBinding ContentTemplate}"
+                                              HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+
+                        </Grid>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="primitives:DataGridColumnHeader">
+        <Setter Property="Background" Value="{StaticResource ApplicationPageBackgroundThemeBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource ApplicationForegroundThemeBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource GridLinesBrush}" />
+        <Setter Property="Height" Value="40" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="primitives:DataGridColumnHeader">
+                    <Border BorderThickness="1" BorderBrush="{TemplateBinding BorderBrush}" Margin="-1 -1 -1 0">
+                        <Grid Background="{TemplateBinding Background}">
+                            <ContentPresenter Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            <common:InlineButton x:Name="PART_FilterButton" Visibility="Collapsed" />
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="primitives:SelectionRegionBorderControl">
+        <Setter Property="Background" Value="{StaticResource GridSelectedBorderBrush}" />
+        <Setter Property="BorderThickness" Value="0" />
+    </Style>
+
+    <Style TargetType="grid:RadDataGrid">
+        <Setter Property="AutoGenerateColumns" Value="False" />
+        <Setter Property="UserGroupMode" Value="Disabled" />
+        <Setter Property="UserFilterMode" Value="Disabled" />
+        <Setter Property="UserColumnReorderMode" Value="None" />
+        <Setter Property="UserSortMode" Value="None" />
+        <Setter Property="RowHeight" Value="36" />
+        <Setter Property="GridLinesThickness" Value="1" />
+        <Setter Property="AlternationStep" Value="2" />
+        <Setter Property="AlternateRowBackground" Value="{StaticResource GridAlternationBackgroundBrush}" />
+        <Setter Property="BorderThickness" Value="1 1 1 1" />
+    </Style>
+</ResourceDictionary>

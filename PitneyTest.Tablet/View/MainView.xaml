@@ -24,12 +24,6 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-        <Grid.ChildrenTransitions>
-            <TransitionCollection>
-                <ContentThemeTransition HorizontalOffset="100" />
-            </TransitionCollection>
-        </Grid.ChildrenTransitions>
-
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="10" />
@@ -46,13 +40,13 @@
             <Button Style="{StaticResource PathButtonStyle}"
                     Content="{StaticResource UserLoginPath}"
                     Command="{Binding LoginCommand}"
-                    Width="60" Height="40" Padding="20 0"/>
-            
+                    Width="50" Height="40" Padding="15 0" Margin="1" />
+
             <Button Style="{StaticResource PathButtonStyle}"
                     Content="{StaticResource RefreshPath}"
                     Command="{Binding RefreshCommand}"
-                    Width="60" Height="40" Padding="20 0"
-                    Margin="3 0 0 0"/>
+                    Width="50" Height="40" Padding="15 0"
+                    Margin="1" />
         </StackPanel>
 
         <grid:RadDataGrid Grid.Row="2" ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
@@ -67,8 +61,14 @@
             <grid:RadDataGrid.GroupDescriptors>
                 <grid:PropertyGroupDescriptor PropertyName="GroupKey" />
             </grid:RadDataGrid.GroupDescriptors>
+
+            <grid:RadDataGrid.Transitions>
+                <TransitionCollection>
+                    <ContentThemeTransition HorizontalOffset="-500"/>
+                </TransitionCollection>
+            </grid:RadDataGrid.Transitions>
         </grid:RadDataGrid>
 
-        <view:ContentDetails Grid.Row="2" Grid.Column="2" DataContext="{Binding SelectedItem}" />
+        <view:DetailsView Grid.Row="2" Grid.Column="2" DataContext="{Binding SelectedItem}" Margin="10 0"/>
     </Grid>
 </Page>
