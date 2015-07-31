@@ -57,7 +57,7 @@ namespace PitneyTest.DataAccess.API
                 var transactions = JsonConvert.DeserializeObject<Transactions>(responseString);
                 return transactions;
             }
-            catch(Exception ex)
+            catch
             {
                 return null;
             }
