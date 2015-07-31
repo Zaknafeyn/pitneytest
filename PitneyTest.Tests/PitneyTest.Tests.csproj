@@ -46,16 +46,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiDataUriBuilderTests.cs" />
-    <Compile Include="Class1.cs" />
+    <Compile Include="DataRetrievalTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\PitneyTest\PitneyTest.csproj">
-      <Project>{041D8637-DF23-43B5-9B82-8C5C3E366602}</Project>
-      <Name>PitneyTest</Name>
+    <ProjectReference Include="..\PitneyTest.DataAccess\PitneyTest.DataAccess.csproj">
+      <Project>{b9a8d61e-47c4-4e6e-8d4c-e5501a5cd822}</Project>
+      <Name>PitneyTest.DataAccess</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
