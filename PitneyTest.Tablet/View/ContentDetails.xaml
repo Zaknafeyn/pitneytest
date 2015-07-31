@@ -11,7 +11,7 @@
         
         <Grid.ChildrenTransitions>
             <TransitionCollection>
-                <ContentThemeTransition HorizontalOffset="200"/>
+                <ContentThemeTransition HorizontalOffset="100"/>
             </TransitionCollection>
         </Grid.ChildrenTransitions>
         
