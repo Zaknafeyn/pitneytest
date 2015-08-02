@@ -61,6 +61,7 @@
     <Compile Include="DataObjects\Sender.cs" />
     <Compile Include="DataObjects\TrackingInfo.cs" />
     <Compile Include="DataObjects\Transactions.cs" />
+    <Compile Include="Helpers\Extensions.cs" />
     <Compile Include="Helpers\HttpUtility.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Token\AccessToken.cs" />

@@ -80,7 +80,7 @@ namespace PitneyTest.DataAccess.API
 
                 return transactions;
             }
-            catch
+            catch(Exception ex)
             {
                 return null;
             }

@@ -111,8 +111,10 @@
     <Compile Include="Converters\EnumerableToVisibilityConverter.cs" />
     <Compile Include="Converters\GroupDescriptorConverter.cs" />
     <Compile Include="Converters\NullToVisibilityConverter.cs" />
+    <Compile Include="Converters\StringFormatConverter.cs" />
     <Compile Include="Converters\UnixTimestampToStringConverter.cs" />
     <Compile Include="Model\ContentModel.cs" />
+    <Compile Include="Model\GroupDescriptor.cs" />
     <Compile Include="Services\AuthContext.cs" />
     <Compile Include="Converters\BooleanInvertedConverter.cs" />
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />

@@ -1,5 +1,6 @@
 ﻿using System;
 using Windows.UI.Xaml.Data;
+using PitneyTest.Tablet.Model;
 using Telerik.UI.Xaml.Controls.Grid;
 
 namespace PitneyTest.Tablet.Converters
@@ -14,15 +15,15 @@ namespace PitneyTest.Tablet.Converters
                 return null;
             }
 
-            switch (context.Group.Key.ToString())
+            switch ((GroupDescriptor) context.Group.Key)
             {
-                case "1":
+                case GroupDescriptor.Today:
                     return "Today";
-                case "2":
+                case GroupDescriptor.Yesterday:
                     return "Yesterday";
-                case "3":
-                    return "LastWeek";
-                case "4":
+                case GroupDescriptor.LastWeek:
+                    return "Last Week";
+                case GroupDescriptor.Older:
                     return "Older";
                 default:
                     throw new InvalidOperationException();

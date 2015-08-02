@@ -4,6 +4,7 @@
     {
         CreateDate,
         StartDate,
-        EndDate
+        EndDate,
+        ShipmentDate
     }
 }

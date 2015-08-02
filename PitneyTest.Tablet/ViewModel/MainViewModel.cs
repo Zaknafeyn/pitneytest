@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Mvvm;
 using PitneyTest.DataAccess.API;
@@ -52,7 +50,7 @@ namespace PitneyTest.Tablet.ViewModel
 
         public DelegateCommand LoginCommand { get; set; }
         public DelegateCommand RefreshCommand { get; set; }
-        
+
         private async void LoadDataAsync()
         {
             IsBusy = true;
@@ -60,18 +58,15 @@ namespace PitneyTest.Tablet.ViewModel
             Items.Clear();
             SelectedItem = null;
 
-            var utcNow = DateTime.UtcNow;
-            var todayStartDate = new DateTime(utcNow.Year, utcNow.Month, utcNow.Day, 0, 0, 0, 0);
-            var todayEndDate = new DateTime(utcNow.Year, utcNow.Month, utcNow.Day, 23, 59, 59, 999);
+            var todayStartDate = DateTime.Now.Date.ToUniversalTime();
+            var todayEndDate = DateTime.Now.Date.AddDays(1).AddSeconds(-1).ToUniversalTime();
 
             var apiUriBuilder = new ApiDataUriBuilder(new ApiBuilderConfiguration
             {
                 StartDate = todayStartDate,
                 EndDate = todayEndDate,
-                CustomSettings = new Dictionary<string, string>
-                {
-                    {"sort", "shipmentDate,asc"}
-                },
+                SortOrder = SortOrder.Desc,
+                SortField = SortField.ShipmentDate,
                 PageSize = 100
             });
 
@@ -81,10 +76,8 @@ namespace PitneyTest.Tablet.ViewModel
             {
                 StartDate = todayStartDate.AddDays(-1),
                 EndDate = todayEndDate.AddDays(-1),
-                CustomSettings = new Dictionary<string, string>
-                {
-                    {"sort", "shipmentDate,asc"}
-                },
+                SortOrder = SortOrder.Desc,
+                SortField = SortField.ShipmentDate,
                 PageSize = 100
             });
 
@@ -92,12 +85,10 @@ namespace PitneyTest.Tablet.ViewModel
 
             apiUriBuilder = new ApiDataUriBuilder(new ApiBuilderConfiguration
             {
-                StartDate = todayStartDate.AddDays(-8),
+                StartDate = todayStartDate.AddDays(-7),
                 EndDate = todayEndDate.AddDays(-2),
-                CustomSettings = new Dictionary<string, string>
-                {
-                    {"sort", "shipmentDate,asc"}
-                },
+                SortOrder = SortOrder.Desc,
+                SortField = SortField.ShipmentDate,
                 PageSize = 100
             });
 
@@ -105,11 +96,10 @@ namespace PitneyTest.Tablet.ViewModel
 
             apiUriBuilder = new ApiDataUriBuilder(new ApiBuilderConfiguration
             {
-                EndDate = todayEndDate.AddDays(-2),
-                CustomSettings = new Dictionary<string, string>
-                {
-                    {"sort", "shipmentDate,asc"}
-                },
+                StartDate = DateTime.MinValue,
+                EndDate = todayEndDate.AddDays(-8),
+                SortOrder = SortOrder.Desc,
+                SortField = SortField.ShipmentDate,
                 PageSize = 100
             });
 
@@ -118,51 +108,47 @@ namespace PitneyTest.Tablet.ViewModel
             var todaysTransactions = await _dataRetrieval.GetTransactionsAsync(todaysTransactionUri, _authContext.AccessToken);
             foreach (var transaction in todaysTransactions.Content)
             {
-                Items.Add(new ContentModel(transaction, "1"));
+                Items.Add(new ContentModel(transaction, GroupDescriptor.Today));
             }
 
-            if (SelectedItem == null && Items.Count > 0)
+            if (SelectedItem == null)
             {
                 SelectedItem = Items.FirstOrDefault();
-                IsBusy = false;
             }
 
             var yesterdaysTransactions = await _dataRetrieval.GetTransactionsAsync(yesterdaysTransactionUri, _authContext.AccessToken);
             foreach (var transaction in yesterdaysTransactions.Content)
             {
-                Items.Add(new ContentModel(transaction, "2"));
+                Items.Add(new ContentModel(transaction, GroupDescriptor.Yesterday));
             }
 
-            if (SelectedItem == null && Items.Count > 0)
+            if (SelectedItem == null)
             {
                 SelectedItem = Items.FirstOrDefault();
-                IsBusy = false;
             }
 
             var lastWeekTransactions = await _dataRetrieval.GetTransactionsAsync(lastWeekTransactionUri, _authContext.AccessToken);
             foreach (var transaction in lastWeekTransactions.Content)
             {
-                Items.Add(new ContentModel(transaction, "3"));
+                Items.Add(new ContentModel(transaction, GroupDescriptor.LastWeek));
             }
 
-            if (SelectedItem == null && Items.Count > 0)
+            if (SelectedItem == null)
             {
                 SelectedItem = Items.FirstOrDefault();
-                IsBusy = false;
             }
 
             var olderTransactions = await _dataRetrieval.GetTransactionsAsync(olderTransactionUri, _authContext.AccessToken);
             foreach (var transaction in olderTransactions.Content)
             {
-                Items.Add(new ContentModel(transaction, "4"));
+                Items.Add(new ContentModel(transaction, GroupDescriptor.Older));
             }
 
-            if (SelectedItem == null && Items.Count > 0)
+            if (SelectedItem == null)
             {
                 SelectedItem = Items.FirstOrDefault();
-                IsBusy = false;
             }
-            
+
             IsBusy = false;
         }
     }

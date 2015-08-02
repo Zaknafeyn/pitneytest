@@ -5,14 +5,14 @@ namespace PitneyTest.Tablet.Model
 {
     internal class ContentModel
     {
-        public ContentModel(Content source, string groupKey)
+        public ContentModel(Content source, GroupDescriptor groupDescriptor)
         {
             Source = source;
-            GroupKey = groupKey;
+            GroupDescriptor = groupDescriptor;
         }
 
-        public string GroupKey { get; set; }
         public Content Source { get; private set; }
+        public GroupDescriptor GroupDescriptor { get; private set; }
 
         public string UserFullName
         {
