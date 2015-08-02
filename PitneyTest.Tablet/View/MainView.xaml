@@ -40,13 +40,14 @@
             <Button Style="{StaticResource PathButtonStyle}"
                     Content="{StaticResource UserLoginPath}"
                     Command="{Binding LoginCommand}"
-                    Width="50" Height="40" Padding="15 0" Margin="1" />
+                    Width="50" Height="40" Padding="15 0" Margin="1"
+                    ToolTipService.ToolTip="Log out"/>
 
             <Button Style="{StaticResource PathButtonStyle}"
                     Content="{StaticResource RefreshPath}"
                     Command="{Binding RefreshCommand}"
-                    Width="50" Height="40" Padding="15 0"
-                    Margin="1" />
+                    Width="50" Height="40" Padding="15 0" Margin="1" 
+                    ToolTipService.ToolTip="Refresh"/>
         </StackPanel>
 
         <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" Visibility="{Binding IsBusy, Converter={StaticResource BooleanToVisibilityConverter}}">

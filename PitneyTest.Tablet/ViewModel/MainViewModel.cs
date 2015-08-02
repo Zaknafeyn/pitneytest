@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Mvvm;
 using PitneyTest.DataAccess.API;
@@ -61,95 +62,55 @@ namespace PitneyTest.Tablet.ViewModel
             var todayStartDate = DateTime.Now.Date.ToUniversalTime();
             var todayEndDate = DateTime.Now.Date.AddDays(1).AddSeconds(-1).ToUniversalTime();
 
-            var apiUriBuilder = new ApiDataUriBuilder(new ApiBuilderConfiguration
-            {
-                StartDate = todayStartDate,
-                EndDate = todayEndDate,
-                SortOrder = SortOrder.Desc,
-                SortField = SortField.ShipmentDate,
-                PageSize = 100
-            });
+            await LoadRangeAsync(GroupDescriptor.Today,
+                todayStartDate,
+                todayEndDate);
 
-            var todaysTransactionUri = apiUriBuilder.GetTransactionsUri();
+            await LoadRangeAsync(GroupDescriptor.Yesterday,
+                todayStartDate.AddDays(-1),
+                todayEndDate.AddDays(-1));
 
-            apiUriBuilder = new ApiDataUriBuilder(new ApiBuilderConfiguration
-            {
-                StartDate = todayStartDate.AddDays(-1),
-                EndDate = todayEndDate.AddDays(-1),
-                SortOrder = SortOrder.Desc,
-                SortField = SortField.ShipmentDate,
-                PageSize = 100
-            });
+            await LoadRangeAsync(GroupDescriptor.LastWeek,
+                todayStartDate.AddDays(-7),
+                todayEndDate.AddDays(-2));
 
-            var yesterdaysTransactionUri = apiUriBuilder.GetTransactionsUri();
-
-            apiUriBuilder = new ApiDataUriBuilder(new ApiBuilderConfiguration
-            {
-                StartDate = todayStartDate.AddDays(-7),
-                EndDate = todayEndDate.AddDays(-2),
-                SortOrder = SortOrder.Desc,
-                SortField = SortField.ShipmentDate,
-                PageSize = 100
-            });
-
-            var lastWeekTransactionUri = apiUriBuilder.GetTransactionsUri();
-
-            apiUriBuilder = new ApiDataUriBuilder(new ApiBuilderConfiguration
-            {
-                StartDate = DateTime.MinValue,
-                EndDate = todayEndDate.AddDays(-8),
-                SortOrder = SortOrder.Desc,
-                SortField = SortField.ShipmentDate,
-                PageSize = 100
-            });
-
-            var olderTransactionUri = apiUriBuilder.GetTransactionsUri();
-
-            var todaysTransactions = await _dataRetrieval.GetTransactionsAsync(todaysTransactionUri, _authContext.AccessToken);
-            foreach (var transaction in todaysTransactions.Content)
-            {
-                Items.Add(new ContentModel(transaction, GroupDescriptor.Today));
-            }
-
-            if (SelectedItem == null)
-            {
-                SelectedItem = Items.FirstOrDefault();
-            }
-
-            var yesterdaysTransactions = await _dataRetrieval.GetTransactionsAsync(yesterdaysTransactionUri, _authContext.AccessToken);
-            foreach (var transaction in yesterdaysTransactions.Content)
-            {
-                Items.Add(new ContentModel(transaction, GroupDescriptor.Yesterday));
-            }
-
-            if (SelectedItem == null)
-            {
-                SelectedItem = Items.FirstOrDefault();
-            }
-
-            var lastWeekTransactions = await _dataRetrieval.GetTransactionsAsync(lastWeekTransactionUri, _authContext.AccessToken);
-            foreach (var transaction in lastWeekTransactions.Content)
-            {
-                Items.Add(new ContentModel(transaction, GroupDescriptor.LastWeek));
-            }
-
-            if (SelectedItem == null)
-            {
-                SelectedItem = Items.FirstOrDefault();
-            }
-
-            var olderTransactions = await _dataRetrieval.GetTransactionsAsync(olderTransactionUri, _authContext.AccessToken);
-            foreach (var transaction in olderTransactions.Content)
-            {
-                Items.Add(new ContentModel(transaction, GroupDescriptor.Older));
-            }
-
-            if (SelectedItem == null)
-            {
-                SelectedItem = Items.FirstOrDefault();
-            }
+            await LoadRangeAsync(GroupDescriptor.Older,
+                DateTime.MinValue,
+                todayEndDate.AddDays(-8));
 
             IsBusy = false;
+        }
+
+        private Uri GetTransactionUri(DateTime starDate, DateTime endDate)
+        {
+            var apiUriBuilder = new ApiDataUriBuilder(new ApiBuilderConfiguration
+            {
+                StartDate = starDate,
+                EndDate = endDate,
+                SortOrder = SortOrder.Desc,
+                SortField = SortField.ShipmentDate,
+                PageSize = 100
+            });
+
+            var transactionUri = apiUriBuilder.GetTransactionsUri();
+
+            return transactionUri;
+        }
+
+        private async Task LoadRangeAsync(GroupDescriptor groupDescriptor, DateTime starDate, DateTime endDate)
+        {
+            var transactionUri = GetTransactionUri(starDate, endDate);
+
+            var transactions = await _dataRetrieval.GetTransactionsAsync(transactionUri, _authContext.AccessToken);
+            foreach (var transaction in transactions.Content)
+            {
+                Items.Add(new ContentModel(transaction, groupDescriptor));
+            }
+
+            if (SelectedItem == null)
+            {
+                SelectedItem = Items.FirstOrDefault();
+            }
         }
     }
 }
