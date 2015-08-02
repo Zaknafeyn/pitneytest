@@ -1,10 +1,9 @@
 ﻿using System;
-using System.IO;
-using System.Net;
+using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using PitneyTest.DataAccess.DataObjects;
-using PitneyTest.DataAccess.Helpers;
 using PitneyTest.DataAccess.Token;
 
 namespace PitneyTest.DataAccess.API
@@ -15,47 +14,54 @@ namespace PitneyTest.DataAccess.API
         private const string CsrfTokenHeader = "x-csrf-token";
         private const string UserIdHeader = "QA-IDP-USER-ID";
 
-        private WebRequest GetLoginWebRequest(Uri uri, string userId)
+        private HttpClient GetLoginHttpClient(string userId)
         {
-            var request = WebRequestHelper.Create(uri);
+            var client = new HttpClient();
 
-            request.Method = "POST";
-            request.ContentType = "application/x-www-form-urlencoded";
-            request.Headers[UserIdHeader] = userId;
+            client.DefaultRequestHeaders.Add(UserIdHeader, userId);
 
-            return request;
+            return client;
         }
 
-        private WebRequest GetTransactionsWebRequest(Uri uri, AccessToken token)
+        private HttpClient GetTransactionsHttpClient(AccessToken token)
         {
-            var request = WebRequestHelper.Create(uri);
+            var client = new HttpClient();
 
-            request.Method = "GET";
-            request.ContentType = "application/x-www-form-urlencoded";
-            request.Headers[AuthTokenHeader] = token.AuthToken;
-            request.Headers[CsrfTokenHeader] = token.CsrfToken;
+            client.DefaultRequestHeaders.Add(AuthTokenHeader, token.AuthToken);
+            client.DefaultRequestHeaders.Add(CsrfTokenHeader, token.CsrfToken);
 
-            return request;
+            return client;
         }
 
-        private AccessToken GetTokenFromResponse(WebResponse response)
+        private async Task<HttpResponseMessage> GetLoginResponseAsync(Uri uri, string userId)
         {
-            var authToken = response.Headers[AuthTokenHeader];
-            var csrfToken = response.Headers[CsrfTokenHeader];
-            return new AccessToken
-            {
-                AuthToken = authToken,
-                CsrfToken = csrfToken
-            };
+            var client = GetLoginHttpClient(userId);
+            var response = await client.PostAsync(uri, null);
+            response.EnsureSuccessStatusCode();
+            return response;
         }
 
-        private Transactions GetTransactionsFromResponse(WebResponse response)
+        private async Task<HttpResponseMessage> GetTransactionsResponseAsync(Uri uri, AccessToken token)
+        {
+            var client = GetTransactionsHttpClient(token);
+            var response = await client.GetAsync(uri);
+            response.EnsureSuccessStatusCode();
+            return response;
+        }
+
+        public async Task<AccessToken> GetTokenAsync(Uri uri, string userId)
         {
             try
             {
-                var responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
-                var transactions = JsonConvert.DeserializeObject<Transactions>(responseString);
-                return transactions;
+                var response = await GetLoginResponseAsync(uri, userId);
+
+                var token = new AccessToken
+                {
+                    AuthToken = response.Headers.First(x => x.Key == AuthTokenHeader).Value.First(),
+                    CsrfToken = response.Headers.First(x => x.Key == CsrfTokenHeader).Value.First()
+                };
+
+                return token;
             }
             catch
             {
@@ -63,18 +69,21 @@ namespace PitneyTest.DataAccess.API
             }
         }
 
-        public async Task<AccessToken> GetTokenAsync(Uri uri, string userId)
-        {
-            var request = GetLoginWebRequest(uri, userId);
-            var response = await request.GetResponseAsync();
-            return GetTokenFromResponse(response);
-        }
-
         public async Task<Transactions> GetTransactionsAsync(Uri uri, AccessToken token)
         {
-            var request = GetTransactionsWebRequest(uri, token);
-            var response = await request.GetResponseAsync();
-            return GetTransactionsFromResponse(response);
+            try
+            {
+                var response = await GetTransactionsResponseAsync(uri, token);
+
+                var responseString = await response.Content.ReadAsStringAsync();
+                var transactions = JsonConvert.DeserializeObject<Transactions>(responseString);
+
+                return transactions;
+            }
+            catch
+            {
+                return null;
+            }
         }
     }
 }

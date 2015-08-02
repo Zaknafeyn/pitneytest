@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Mvvm;
 using PitneyTest.DataAccess.API;
@@ -15,6 +16,7 @@ namespace PitneyTest.Tablet.ViewModel
     {
         private readonly AuthContext _authContext;
         private readonly DataRetrieval _dataRetrieval;
+        private bool _isBusy;
         private ObservableCollection<ContentModel> _items;
         private ContentModel _selectedItem;
 
@@ -24,7 +26,7 @@ namespace PitneyTest.Tablet.ViewModel
             _authContext = authContext;
 
             Items = new ObservableCollection<ContentModel>();
-            LoginCommand = new DelegateCommand(() => NavigationService.Navigate(typeof (LoginView)));
+            LoginCommand = new DelegateCommand(() => NavigationService.Navigate(typeof(LoginView)));
             RefreshCommand = new DelegateCommand(LoadDataAsync);
 
             LoadDataAsync();
@@ -42,12 +44,21 @@ namespace PitneyTest.Tablet.ViewModel
             set { SetProperty(ref _selectedItem, value); }
         }
 
+        public bool IsBusy
+        {
+            get { return _isBusy; }
+            set { SetProperty(ref _isBusy, value); }
+        }
+
         public DelegateCommand LoginCommand { get; set; }
         public DelegateCommand RefreshCommand { get; set; }
-
+        
         private async void LoadDataAsync()
         {
+            IsBusy = true;
+
             Items.Clear();
+            SelectedItem = null;
 
             var utcNow = DateTime.UtcNow;
             var todayStartDate = new DateTime(utcNow.Year, utcNow.Month, utcNow.Day, 0, 0, 0, 0);
@@ -110,12 +121,22 @@ namespace PitneyTest.Tablet.ViewModel
                 Items.Add(new ContentModel(transaction, "1"));
             }
 
-            SelectedItem = Items.FirstOrDefault();
+            if (SelectedItem == null && Items.Count > 0)
+            {
+                SelectedItem = Items.FirstOrDefault();
+                IsBusy = false;
+            }
 
             var yesterdaysTransactions = await _dataRetrieval.GetTransactionsAsync(yesterdaysTransactionUri, _authContext.AccessToken);
             foreach (var transaction in yesterdaysTransactions.Content)
             {
                 Items.Add(new ContentModel(transaction, "2"));
+            }
+
+            if (SelectedItem == null && Items.Count > 0)
+            {
+                SelectedItem = Items.FirstOrDefault();
+                IsBusy = false;
             }
 
             var lastWeekTransactions = await _dataRetrieval.GetTransactionsAsync(lastWeekTransactionUri, _authContext.AccessToken);
@@ -124,16 +145,25 @@ namespace PitneyTest.Tablet.ViewModel
                 Items.Add(new ContentModel(transaction, "3"));
             }
 
+            if (SelectedItem == null && Items.Count > 0)
+            {
+                SelectedItem = Items.FirstOrDefault();
+                IsBusy = false;
+            }
+
             var olderTransactions = await _dataRetrieval.GetTransactionsAsync(olderTransactionUri, _authContext.AccessToken);
             foreach (var transaction in olderTransactions.Content)
             {
                 Items.Add(new ContentModel(transaction, "4"));
             }
 
-            if (SelectedItem == null)
+            if (SelectedItem == null && Items.Count > 0)
             {
                 SelectedItem = Items.FirstOrDefault();
+                IsBusy = false;
             }
+            
+            IsBusy = false;
         }
     }
 }

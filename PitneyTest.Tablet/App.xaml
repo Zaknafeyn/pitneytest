@@ -16,6 +16,7 @@
             <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
             <converters:BooleanToVisibilityInvertedConverter x:Key="BooleanToVisibilityInvertedConverter" />
             <converters:NotNullToVisibilityConverter x:Key="NotNullToVisibilityConverter" />
+            <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
             <converters:DebugConverter x:Key="DebugConverter" />
 
             <SolidColorBrush x:Key="GroupPanelBackgroundBrush" Color="LightGray" Opacity="0.4" />

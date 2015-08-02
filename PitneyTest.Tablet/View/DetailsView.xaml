@@ -8,8 +8,8 @@
         <converters:EnumerableToVisibilityConverter x:Key="EnumerableToVisibilityConverter" />
     </UserControl.Resources>
 
-    <Grid Visibility="{Binding Converter={StaticResource NotNullToVisibilityConverter}, FallbackValue=Collapsed}">
 
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="20" />
@@ -24,8 +24,7 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <TextBlock Text="{Binding UserFullName}"
-                   Style="{StaticResource SubheaderTextBlockStyle}" />
+        <TextBlock Text="{Binding UserFullName}" Style="{StaticResource SubheaderTextBlockStyle}" />
 
         <Grid Grid.Row="2">
             <Grid.RowDefinitions>

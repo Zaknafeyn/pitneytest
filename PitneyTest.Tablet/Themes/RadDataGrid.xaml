@@ -64,12 +64,13 @@
         <Setter Property="Foreground" Value="{StaticResource ApplicationForegroundThemeBrush}" />
         <Setter Property="BorderBrush" Value="{StaticResource GridLinesBrush}" />
         <Setter Property="Height" Value="40" />
+        <Setter Property="Padding" Value="10 0" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="primitives:DataGridColumnHeader">
                     <Border BorderThickness="1" BorderBrush="{TemplateBinding BorderBrush}" Margin="-1 -1 -1 0">
                         <Grid Background="{TemplateBinding Background}">
-                            <ContentPresenter Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            <ContentPresenter Content="{TemplateBinding Content}" Margin="{TemplateBinding Padding}" HorizontalAlignment="Center" VerticalAlignment="Center" />
                             <common:InlineButton x:Name="PART_FilterButton" Visibility="Collapsed" />
                         </Grid>
                     </Border>

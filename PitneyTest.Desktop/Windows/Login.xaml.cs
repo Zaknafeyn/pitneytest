@@ -3,7 +3,6 @@ using System.Windows;
 using System.Windows.Input;
 using PitneyTest.DataAccess;
 using PitneyTest.DataAccess.API;
-using PitneyTest.DataAccess.Token;
 
 namespace PitneyTest.Windows
 {
@@ -29,29 +28,21 @@ namespace PitneyTest.Windows
             var url = new Uri(string.Format(loginUrl, loginServer));
 
             var dataRetrieval = new DataRetrieval();
-            Cursor = Cursors.Wait;
-            AccessToken token = null;
 
-            try
-            {
-                token = await dataRetrieval.GetTokenAsync(url, UserId);
-            }
-            catch
+            Cursor = Cursors.Wait;
+            var token = await dataRetrieval.GetTokenAsync(url, UserId);
+            Cursor = Cursors.Arrow;
+
+            if (token == null)
             {
                 MessageBox.Show("Invalid username. Try again.", "Login error", MessageBoxButton.OK);
-                return;
             }
-            finally
+            else
             {
-                Cursor = Cursors.Arrow;
+                var mainWindow = new MainWindow(token, dataRetrieval);
+                //mainWindow.Show();
+                Close();
             }
-
-            var mainWindow = new MainWindow(token, dataRetrieval);
-
-
-//            mainWindow.Show();
-
-            Close();
         }
 
         private void BtnCancel_Click(object sender, RoutedEventArgs e)

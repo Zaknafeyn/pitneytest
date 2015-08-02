@@ -62,7 +62,6 @@
     <Compile Include="DataObjects\TrackingInfo.cs" />
     <Compile Include="DataObjects\Transactions.cs" />
     <Compile Include="Helpers\HttpUtility.cs" />
-    <Compile Include="Helpers\WebRequestHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Token\AccessToken.cs" />
   </ItemGroup>
