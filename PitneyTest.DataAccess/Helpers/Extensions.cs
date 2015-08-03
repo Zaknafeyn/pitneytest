@@ -14,7 +14,7 @@ namespace PitneyTest.DataAccess.Helpers
                 case SortOrder.Desc:
                     return "desc";
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(value), value, null);
+                    throw new ArgumentOutOfRangeException(value.GetType().Name, value, null);
             }
         }
 
@@ -31,7 +31,7 @@ namespace PitneyTest.DataAccess.Helpers
                 case SortField.ShipmentDate:
                     return "shipmentDate";
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(value), value, null);
+                    throw new ArgumentOutOfRangeException(value.GetType().Name, value, null);
             }
         }
     }

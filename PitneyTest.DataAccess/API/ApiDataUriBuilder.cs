@@ -23,7 +23,7 @@ namespace PitneyTest.DataAccess.API
         }
 
         public ApiBuilderConfiguration Configuration { get; set; }
-        public Uri DataApiUri { get; }
+        public Uri DataApiUri { get; private set; }
 
         public Uri GetTransactionsUri()
         {
