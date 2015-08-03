@@ -4,12 +4,12 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mvvm="using:Microsoft.Practices.Prism.Mvvm"
     mvvm:ViewModelLocator.AutoWireViewModel="True">
-
+    
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         
         <Grid.ChildrenTransitions>
             <TransitionCollection>
-                <ContentThemeTransition HorizontalOffset="200"/>
+                <EntranceThemeTransition FromHorizontalOffset="200"/>
             </TransitionCollection>
         </Grid.ChildrenTransitions>
         

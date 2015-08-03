@@ -8,8 +8,8 @@
         <converters:EnumerableToVisibilityConverter x:Key="EnumerableToVisibilityConverter" />
     </UserControl.Resources>
 
-    <Grid Visibility="{Binding Converter={StaticResource NotNullToVisibilityConverter}, FallbackValue=Collapsed}">
 
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="20" />
@@ -24,8 +24,7 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <TextBlock Text="{Binding UserFullName}"
-                   Style="{StaticResource SubheaderTextBlockStyle}" />
+        <TextBlock Text="{Binding UserFullName}" Style="{StaticResource SubheaderTextBlockStyle}" />
 
         <Grid Grid.Row="2">
             <Grid.RowDefinitions>
@@ -45,12 +44,12 @@
             </Grid.ColumnDefinitions>
 
             <TextBox Grid.Column="0" Grid.Row="0" Text="{Binding DebitOrCredit}" Style="{StaticResource ReadonlyTextBoxStyle}" Header="Debit/Credit" />
-            <TextBox Grid.Column="0" Grid.Row="2" Text="{Binding RefundStatus}" Style="{StaticResource ReadonlyTextBoxStyle}" Header="RefundStatus" />
-            <TextBox Grid.Column="0" Grid.Row="4" Text="{Binding MailClass}" Style="{StaticResource ReadonlyTextBoxStyle}" Header="MailClass" />
-            <TextBox Grid.Column="0" Grid.Row="6" Text="{Binding PrepayBalance}" Style="{StaticResource ReadonlyTextBoxStyle}" Header="PrepayBalance" />
-            <TextBox Grid.Column="2" Grid.Row="0" Text="{Binding WidthMeters}" Style="{StaticResource ReadonlyTextBoxStyle}" Header="WidthMeters" />
-            <TextBox Grid.Column="2" Grid.Row="2" Text="{Binding HeightMeters}" Style="{StaticResource ReadonlyTextBoxStyle}" Header="HeightMeters" />
-            <TextBox Grid.Column="2" Grid.Row="4" Text="{Binding WeightKilos}" Style="{StaticResource ReadonlyTextBoxStyle}" Header="WeightKilos" />
+            <TextBox Grid.Column="0" Grid.Row="2" Text="{Binding RefundStatus}" Style="{StaticResource ReadonlyTextBoxStyle}" Header="Refund Status" />
+            <TextBox Grid.Column="0" Grid.Row="4" Text="{Binding MailClass}" Style="{StaticResource ReadonlyTextBoxStyle}" Header="Mail Class" />
+            <TextBox Grid.Column="0" Grid.Row="6" Text="{Binding PrepayBalance}" Style="{StaticResource ReadonlyTextBoxStyle}" Header="Prepay Balance" />
+            <TextBox Grid.Column="2" Grid.Row="0" Text="{Binding WidthMeters}" Style="{StaticResource ReadonlyTextBoxStyle}" Header="Width Meters" />
+            <TextBox Grid.Column="2" Grid.Row="2" Text="{Binding HeightMeters}" Style="{StaticResource ReadonlyTextBoxStyle}" Header="Height Meters" />
+            <TextBox Grid.Column="2" Grid.Row="4" Text="{Binding WeightKilos}" Style="{StaticResource ReadonlyTextBoxStyle}" Header="Weight Kilos" />
             <TextBox Grid.Column="2" Grid.Row="6" Text="{Binding AmountFull}" Style="{StaticResource ReadonlyTextBoxStyle}" Header="Amount" />
         </Grid>
 

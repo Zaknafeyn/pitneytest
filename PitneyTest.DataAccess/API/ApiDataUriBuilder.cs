@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using PitneyTest.DataAccess.Helpers;
 
 namespace PitneyTest.DataAccess.API
@@ -21,7 +23,7 @@ namespace PitneyTest.DataAccess.API
         }
 
         public ApiBuilderConfiguration Configuration { get; set; }
-        public Uri DataApiUri { get; private set; }
+        public Uri DataApiUri { get; }
 
         public Uri GetTransactionsUri()
         {
@@ -80,20 +82,27 @@ namespace PitneyTest.DataAccess.API
 
         private KeyValuePair<string, string>? GetSortParameter(SortField? sortField, SortOrder? sortOrder)
         {
+            JsonConvert.DefaultSettings = (() =>
+            {
+                var settings = new JsonSerializerSettings();
+                settings.Converters.Add(new StringEnumConverter {CamelCaseText = true});
+                return settings;
+            });
+
             if (!sortOrder.HasValue && !sortField.HasValue)
                 return null;
 
             if (sortOrder.HasValue && sortField.HasValue)
                 return new KeyValuePair<string, string>("sort", string.Format("{0},{1}",
-                    Enum.GetName(typeof (SortField), sortField.Value),
-                    Enum.GetName(typeof (SortOrder), sortOrder.Value)));
+                    sortField.Value.ToRequestParameter(),
+                    sortOrder.Value.ToRequestParameter()));
 
             if (sortOrder.HasValue)
                 return new KeyValuePair<string, string>("sort", string.Format("{0}",
-                    Enum.GetName(typeof (SortField), sortField.Value)));
+                    sortOrder.Value.ToRequestParameter()));
 
             return new KeyValuePair<string, string>("sort", string.Format("{0}",
-                Enum.GetName(typeof (SortOrder), sortOrder.Value)));
+                sortField.Value.ToRequestParameter()));
         }
 
         #endregion

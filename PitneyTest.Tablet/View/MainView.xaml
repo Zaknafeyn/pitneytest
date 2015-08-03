@@ -40,35 +40,48 @@
             <Button Style="{StaticResource PathButtonStyle}"
                     Content="{StaticResource UserLoginPath}"
                     Command="{Binding LoginCommand}"
-                    Width="50" Height="40" Padding="15 0" Margin="1" />
+                    Width="50" Height="40" Padding="15 0" Margin="1"
+                    ToolTipService.ToolTip="Log out"/>
 
             <Button Style="{StaticResource PathButtonStyle}"
                     Content="{StaticResource RefreshPath}"
                     Command="{Binding RefreshCommand}"
-                    Width="50" Height="40" Padding="15 0"
-                    Margin="1" />
+                    Width="50" Height="40" Padding="15 0" Margin="1" 
+                    ToolTipService.ToolTip="Refresh"/>
         </StackPanel>
 
-        <grid:RadDataGrid Grid.Row="2" ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
-                          GroupHeaderTemplate="{StaticResource GroupHeaderTemplate}">
-            <grid:RadDataGrid.Columns>
-                <grid:DataGridTextColumn Header="USER" PropertyName="UserDisplayName" />
-                <grid:DataGridTemplateColumn Header="SHIPMENT DATE" CellContentTemplate="{StaticResource ShipmentDateColumnTemplate}" />
-                <grid:DataGridTextColumn Header="DEBIT/CREDIT" PropertyName="DebitOrCredit" />
-                <grid:DataGridTextColumn Header="AMOUNT" PropertyName="MailServiceCost" />
-                <grid:DataGridTextColumn Header="CURRENCY" PropertyName="Currency" />
-            </grid:RadDataGrid.Columns>
-            <grid:RadDataGrid.GroupDescriptors>
-                <grid:PropertyGroupDescriptor PropertyName="GroupKey" />
-            </grid:RadDataGrid.GroupDescriptors>
+        <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" Visibility="{Binding IsBusy, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <ContentControl Template="{StaticResource LoadingIndicatorTeplate}" Margin="15 0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </StackPanel>
 
-            <grid:RadDataGrid.Transitions>
+        <Grid Grid.Row="2" Grid.Column="0">
+            <grid:RadDataGrid ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}" GroupHeaderTemplate="{StaticResource GroupHeaderTemplate}">
+                <grid:RadDataGrid.Columns>
+                    <grid:DataGridTextColumn Header="USER" PropertyName="UserDisplayName" SizeMode="Stretch" />
+                    <grid:DataGridTemplateColumn Header="SHIPMENT DATE" CellContentTemplate="{StaticResource ShipmentDateColumnTemplate}" SizeMode="Stretch" />
+                    <grid:DataGridTextColumn Header="DEBIT/CREDIT" PropertyName="DebitOrCredit" SizeMode="Stretch" />
+                    <grid:DataGridTextColumn Header="AMOUNT" PropertyName="MailServiceCost" SizeMode="Stretch" />
+                    <grid:DataGridTextColumn Header="CURRENCY" PropertyName="Currency" SizeMode="Stretch" />
+                </grid:RadDataGrid.Columns>
+                <grid:RadDataGrid.GroupDescriptors>
+                    <grid:PropertyGroupDescriptor PropertyName="GroupDescriptor" />
+                </grid:RadDataGrid.GroupDescriptors>
+            </grid:RadDataGrid>
+            <Grid.Transitions>
                 <TransitionCollection>
-                    <ContentThemeTransition HorizontalOffset="-500"/>
+                    <EntranceThemeTransition FromHorizontalOffset="-200" />
                 </TransitionCollection>
-            </grid:RadDataGrid.Transitions>
-        </grid:RadDataGrid>
+            </Grid.Transitions>
+        </Grid>
 
-        <view:DetailsView Grid.Row="2" Grid.Column="2" DataContext="{Binding SelectedItem}" Margin="10 0"/>
+        <Grid Grid.Row="2" Grid.Column="2" Margin="10 0">
+            <view:DetailsView DataContext="{Binding SelectedItem}" Visibility="{Binding Converter={StaticResource NotNullToVisibilityConverter}, FallbackValue=Collapsed}" />
+            <view:EmptyDetailsView DataContext="{Binding SelectedItem}" Visibility="{Binding Converter={StaticResource NullToVisibilityConverter}}" />
+            <Grid.Transitions>
+                <TransitionCollection>
+                    <EntranceThemeTransition FromHorizontalOffset="200" />
+                </TransitionCollection>
+            </Grid.Transitions>
+        </Grid>
     </Grid>
 </Page>
