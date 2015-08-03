@@ -8,6 +8,7 @@ namespace PitneyTest.Tests
     public class DataRetrievalTest
     {
         [Test]
+        [Ignore]
         public async void TestDataRetrieval()
         {
             var url = new Uri("http://foundation-qa.horizon.pitneycloud.com/api/v1/user/auth/guam");
@@ -18,6 +19,7 @@ namespace PitneyTest.Tests
         }
 
         [Test]
+        [Ignore]
         public async void TestDataRetrievalGetTransactions()
         {
             var transactionsUrl = new Uri("http://shipping-qa.horizon.pitneycloud.com/api/v1/transactions");
