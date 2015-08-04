@@ -14,7 +14,7 @@ namespace PitneyTest.Tablet.Converters
             if (collection == null)
                 return Visibility.Collapsed;
 
-            if (collection.Cast<object>().Any())
+            if (collection.Cast<object>().Any(x => x != null))
                 return Visibility.Visible;
 
             return Visibility.Collapsed;

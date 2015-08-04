@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using PitneyTest.DataAccess.DataObjects;
 
 namespace PitneyTest.Tablet.Model
@@ -9,6 +10,24 @@ namespace PitneyTest.Tablet.Model
         {
             Source = source;
             GroupDescriptor = groupDescriptor;
+            
+            //var badRecepients = Source.RecipientEmails.Where(x => x == null).ToList();
+            //foreach (var item in badRecepients)
+            //{
+            //    Source.RecipientEmails.Remove(item);
+            //}
+
+            //var badSenders = Source.SenderEmails.Where(x => x == null).ToList();
+            //foreach (var item in badSenders)
+            //{
+            //    Source.SenderEmails.Remove(item);
+            //}
+
+            //var badExtraServices = Source.ExtraServices.Where(x => x == null).ToList();
+            //foreach (var item in badExtraServices)
+            //{
+            //    Source.ExtraServices.Remove(item);
+            //}
         }
 
         public Content Source { get; private set; }
