@@ -63,6 +63,11 @@
 
             <Style TargetType="TextBox" BasedOn="{StaticResource TextBoxStyle}" />
 
+            <Style TargetType="PasswordBox">
+                <Setter Property="BorderThickness" Value="1" />
+                <Setter Property="SelectionHighlightColor" Value="{StaticResource TextBoxSelectionBrush}" />
+            </Style>
+
             <Style TargetType="ProgressRing">
                 <Setter Property="Foreground" Value="{StaticResource ProgressRingForegroundBrush}" />
             </Style>
@@ -84,7 +89,7 @@
                 <Path x:Name="Path"
                       Data="{StaticResource SynchronizationPath}"
                       Stretch="Uniform"
-                      Fill="Gray" 
+                      Fill="Gray"
                       Width="20"
                       Height="20"
                       RenderTransformOrigin="0.5, 0.5">
@@ -102,7 +107,7 @@
                     </Path.Triggers>
                 </Path>
             </ControlTemplate>
-            
+
         </ResourceDictionary>
     </Application.Resources>
 

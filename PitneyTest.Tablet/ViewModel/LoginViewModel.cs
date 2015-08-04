@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading.Tasks;
 using Windows.UI.Popups;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Mvvm;
@@ -15,20 +14,28 @@ namespace PitneyTest.Tablet.ViewModel
         private readonly AuthContext _authContext;
         private readonly DataRetrieval _dataRetrieval;
         private bool _isBusy;
-        private string _userId;
+        private string _password;
+        private string _userName;
 
         public LoginViewModel(DataRetrieval dataRetrieval, AuthContext authContext)
         {
             _dataRetrieval = dataRetrieval;
             _authContext = authContext;
             LoginCommand = new DelegateCommand(LoginExecuted, LoginCanExecute);
-            UserId = "950f9e6a-2ce9-44f2-9f25-31e5caad60a0@pb";
+            UserName = "craig.j1@horizon.com";
+            Password = "Testing123";
         }
 
-        public string UserId
+        public string UserName
         {
-            get { return _userId; }
-            set { SetProperty(ref _userId, value); }
+            get { return _userName; }
+            set { SetProperty(ref _userName, value); }
+        }
+
+        public string Password
+        {
+            get { return _password; }
+            set { SetProperty(ref _password, value); }
         }
 
         public bool IsBusy
@@ -41,15 +48,15 @@ namespace PitneyTest.Tablet.ViewModel
 
         private bool LoginCanExecute()
         {
-            return !string.IsNullOrWhiteSpace(UserId);
+            return !string.IsNullOrWhiteSpace(UserName);
         }
 
         private async void LoginExecuted()
         {
             IsBusy = true;
-            
+
             var url = new Uri(string.Format(Configuration.LoginUrl, Configuration.LoginServer));
-            _authContext.AccessToken = await _dataRetrieval.GetTokenAsync(url, UserId);
+            _authContext.AccessToken = await _dataRetrieval.GetTokenAsync(url, UserName, Password);
 
             IsBusy = false;
 

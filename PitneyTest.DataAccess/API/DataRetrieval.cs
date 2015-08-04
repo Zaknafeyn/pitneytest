@@ -10,6 +10,7 @@ namespace PitneyTest.DataAccess.API
 {
     public class DataRetrieval
     {
+        private const string ClientId = "2856109e-ca67-4aa8-bf34-8877bc0502e9";
         private const string AuthTokenHeader = "authToken";
         private const string CsrfTokenHeader = "x-csrf-token";
         private const string UserIdHeader = "QA-IDP-USER-ID";
@@ -97,11 +98,11 @@ namespace PitneyTest.DataAccess.API
             }
         }
 
-        public async Task<AccessToken> GetTokenAsync(Uri uri, string userId, string password, string clientId)
+        public async Task<AccessToken> GetTokenAsync(Uri uri, string userId, string password)
         {
             try
             {
-                var response = await GetLoginResponseAsync(uri, userId, password, clientId);
+                var response = await GetLoginResponseAsync(uri, userId, password, ClientId);
 
                 var token = new AccessToken
                 {

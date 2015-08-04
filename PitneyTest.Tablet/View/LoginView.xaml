@@ -17,31 +17,41 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="10" />
-                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" MinWidth="400"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="10" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="10" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
             <TextBlock Grid.Column="0" Grid.Row="0"
-                       Text="User ID"
+                       Text="User"
                        Style="{StaticResource LabelTextBlockStyle}" />
 
             <TextBox Grid.Column="2" Grid.Row="0" x:Name="login"
-                     Text="{Binding UserId, Mode=TwoWay}"
+                     Text="{Binding UserName, Mode=TwoWay}"
                      IsEnabled="{Binding IsBusy, Converter={StaticResource BooleanInvertedConverter}}"
-                     PlaceholderText="Enter user identification..."
-                     MinWidth="600" />
+                     PlaceholderText="Enter user name..."/>
+            
+            <TextBlock Grid.Column="0" Grid.Row="2"
+                       Text="Password"
+                       Style="{StaticResource LabelTextBlockStyle}" />
 
-            <StackPanel Grid.Column="2" Grid.Row="2" Orientation="Horizontal"
+            <PasswordBox Grid.Column="2" Grid.Row="2"
+                     Password="{Binding Password, Mode=TwoWay}"
+                     IsEnabled="{Binding IsBusy, Converter={StaticResource BooleanInvertedConverter}}"
+                     PlaceholderText="Enter password..."/>
+
+            <StackPanel Grid.Column="2" Grid.Row="4" Orientation="Horizontal"
                         Visibility="{Binding IsBusy, Converter={StaticResource BooleanToVisibilityConverter}}">
                 <ProgressRing Width="40" Height="40" IsActive="{Binding IsBusy}"/>
                 <TextBlock Text="Authenticating" Style="{StaticResource LabelTextBlockStyle}" Margin="10 0"/>
             </StackPanel>
 
-            <Button Grid.Column="2" Grid.Row="2"
+            <Button Grid.Column="2" Grid.Row="4"
                     Content="Login"
                     Command="{Binding LoginCommand}"
                     IsEnabled="{Binding IsBusy, Converter={StaticResource BooleanInvertedConverter}}"
