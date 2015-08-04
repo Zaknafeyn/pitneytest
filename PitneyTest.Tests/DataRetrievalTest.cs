@@ -20,6 +20,19 @@ namespace PitneyTest.Tests
 
         [Test]
         [Ignore]
+        public async void TestDataRetrievalGetTokenByLoginPassword()
+        {
+            var url = new Uri("http://foundation-qa.horizon.pitneycloud.com/api/v1/user/auth/guam");
+            var userId = "craig.j1@horizon.com";
+            var password = "Testing123";
+            var clientId = "2856109e-ca67-4aa8-bf34-8877bc0502e9";
+            var target = new DataRetrieval();
+            var result = await target.GetTokenAsync(url, userId, password, clientId);
+            Assert.AreNotEqual(result, null);
+        }
+
+        [Test]
+        [Ignore]
         public async void TestDataRetrievalGetTransactions()
         {
             var transactionsUrl = new Uri("http://shipping-qa.horizon.pitneycloud.com/api/v1/transactions");
@@ -30,5 +43,7 @@ namespace PitneyTest.Tests
             var transactions = await target.GetTransactionsAsync(transactionsUrl, token);
             Assert.AreNotEqual(transactions, null);
         }
+
+
     }
 }
